@@ -1,0 +1,43 @@
+name: notako_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.5 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/fonts/
+  fonts:
+    - family: DM-Sans
+      fonts:
+        - asset: assets/fonts/dm_sans/dmsans_regular.ttf
+          weight: 400
+        - asset: assets/fonts/dm_sans/dmsans_medium.ttf
+          weight: 500
+        - asset: assets/fonts/dm_sans/dmsans_bold.ttf
+          weight: 600
+    - family: Archivo
+      fonts:
+        - asset: assets/fonts/archivo/archivo_light.ttf
+          weight: 300
+        - asset: assets/fonts/archivo/archivo_regular.ttf
+          weight: 400
+        - asset: assets/fonts/archivo/archivo_medium.ttf
+          weight: 500
+        - asset: assets/fonts/archivo/archivo_bold.ttf
+          weight: 600
+
+
