@@ -18,26 +18,26 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
-    - assets/fonts/
+    - lib/assets/images/
+    - lib/assets/fonts/
   fonts:
     - family: DM-Sans
       fonts:
-        - asset: assets/fonts/dm_sans/dm_sans_regular.ttf
+        - asset: lib/assets/fonts/dm_sans/dm_sans_regular.ttf
           weight: 400
-        - asset: assets/fonts/dm_sans/dm_sans_medium.ttf
+        - asset: lib/assets/fonts/dm_sans/dm_sans_medium.ttf
           weight: 500
-        - asset: assets/fonts/dm_sans/dm_sans_bold.ttf
+        - asset: lib/assets/fonts/dm_sans/dm_sans_bold.ttf
           weight: 600
     - family: Archivo
       fonts:
-        - asset: assets/fonts/archivo/archivo_light.ttf
+        - asset: lib/assets/fonts/archivo/archivo_light.ttf
           weight: 300
-        - asset: assets/fonts/archivo/archivo_regular.ttf
+        - asset: lib/assets/fonts/archivo/archivo_regular.ttf
           weight: 400
-        - asset: assets/fonts/archivo/archivo_medium.ttf
+        - asset: lib/assets/fonts/archivo/archivo_medium.ttf
           weight: 500
-        - asset: assets/fonts/archivo/archivo_bold.ttf
+        - asset: lib/assets/fonts/archivo/archivo_bold.ttf
           weight: 600
 
 
