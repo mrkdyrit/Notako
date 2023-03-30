@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -18,7 +19,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - lib/assets/images/
+    - lib/assets/images/logo/svg/
+    - lib/assets/images/logo/png/
     - lib/assets/fonts/
   fonts:
     - family: DM-Sans

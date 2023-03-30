@@ -1,6 +1,6 @@
 class Assets {
   // Images
-  static const String imagePath = "assets/images/";
+  static const String imagePath = "lib/assets/images/";
 
   // Logo
   static const String logoPath = "logo/";
