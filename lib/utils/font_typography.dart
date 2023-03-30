@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notako_app/utils/colors.dart' as notako_color;
 
 class FontTypography {
   // Font Family
@@ -26,6 +27,49 @@ class FontTypography {
   static const TextStyle subHeading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs2,);
   static const TextStyle subHeading2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs3,);
   static const TextStyle subHeading3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs4,);
-  static const TextStyle subHeading4 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs5,);
+  
+  // Muted Texts
+  static const mutedColor = notako_color.Colors.greyColor;
 
+  static const TextStyle mutedText1 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs2, 
+    color: mutedColor
+  );
+
+  static const TextStyle mutedText2 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs4, 
+    color: mutedColor
+  );
+
+  static const TextStyle mutedText3 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs5, 
+    color: mutedColor
+  );
+
+  static const TextStyle mutedText4 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs6, 
+    color: mutedColor
+  );
+
+  static const TextStyle mutedText5 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs7, 
+    color: mutedColor
+  );
+
+  static const TextStyle mutedText6 = TextStyle(
+    fontFamily: fontFamily, 
+    fontWeight: FontWeight.normal, 
+    fontSize: fs8, 
+    color: mutedColor
+  );
 }
