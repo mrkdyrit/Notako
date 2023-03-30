@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "243744048794",
+    "project_id": "notako-bed89",
+    "storage_bucket": "notako-bed89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243744048794:android:49fa0d0f390f1372c78123",
+        "android_client_info": {
+          "package_name": "com.example.notako_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243744048794-6aqa1v4k69dnr94v92gud9d16kp9u366.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmbe8SI3DDTdK2lhCWtjiqtBwNNe4opB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243744048794-6aqa1v4k69dnr94v92gud9d16kp9u366.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243744048794-fa9vo2mvtbf8jhfljkld25mbufbgiota.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.notakoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
