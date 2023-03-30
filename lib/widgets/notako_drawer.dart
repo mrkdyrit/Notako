@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
-import 'package:notako_app/assets/fonts/fonts.dart';
-import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
 
