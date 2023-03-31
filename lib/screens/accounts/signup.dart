@@ -177,6 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             password: passwordController.text.trim(),
                           ).then((value) => {
                             if(value.user != null) {
+                              SnackBarUtil.showSnackBar(context, 'Signed in as ${emailController.text.trim()}'),
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => const HomeScreen()),
