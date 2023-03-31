@@ -128,10 +128,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         bool isLoggedIn = false;
 
                         try {
-                          final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim()
-                          );
+                          ).then((value) => {
+                            if(value.user != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                              )
+                            }
+                          });
+
+
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
                             SnackBarUtil.showSnackBar(context, 'No user found for that email.');

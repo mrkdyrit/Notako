@@ -172,27 +172,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if(_regisFormKey.currentState!.validate()) {
                         try {
 
-                          bool isLoggedIn = false;
-
-                          final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
                           ).then((value) => {
                             if(value.user != null) {
-                              isLoggedIn = true,
-                              SnackBarUtil.showSnackBar(context, 'Successfully Registered')
-                            } else {
-                              SnackBarUtil.showSnackBar(context, 'Failed to register user.')
-                            },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                              )
+                            }
                           });
-
-                          if(isLoggedIn) {
-                            setState(() {
-                              emailController.clear();
-                              passwordController.clear();
-                              passwordConfirmationController.clear();
-                            });
-                          }
 
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
