@@ -1,9 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
+import 'package:notako_app/firebase_options.dart';
 import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,6 +20,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isHidden = true;
   final Icon _passIconShow = const Icon(Icons.visibility, color: notako_color.Colors.greyColor,);
   final Icon _passIconHide = const Icon(Icons.visibility_off, color: notako_color.Colors.greyColor,);
+
+  // TextField Controllers
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmationController = TextEditingController();
+
+  // Registration Form
+  final _regisFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,117 +48,177 @@ class _SignUpScreenState extends State<SignUpScreen> {
             style: FontTypography.heading1.copyWith(color: notako_color.Colors.secondaryColor),
             textAlign: TextAlign.center,
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
-            child: Text(
-              'Email Address',
-              style: FontTypography.heading5,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10), 
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.email, color: notako_color.Colors.secondaryColor,),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
-            child: Text(
-              'Password',
-              style: FontTypography.heading5,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10,), 
-            child: TextField(
-              onTapOutside: (event) {
-                setState(() {
-                  _isHidden = true;
-                });
-              },
-              obscureText: _isHidden,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
-                suffixIcon: IconButton(
-                  icon: _isHidden ? _passIconShow: _passIconHide, 
-                  onPressed: () { 
-                    setState(() {
-                      _isHidden ? _isHidden = false: _isHidden = true;
-                    });
-                  },
+          Form(
+            key: _regisFormKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+                  child: Text(
+                    'Email Address',
+                    style: FontTypography.heading5,
+                  ),
                 ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
-            child: Text(
-              'Confirm Password',
-              style: FontTypography.heading5,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20), 
-            child: TextField(
-              onTapOutside: (event) {
-                setState(() {
-                  _isHidden = true;
-                });
-              },
-              obscureText: _isHidden,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
-                suffixIcon: IconButton(
-                  icon: _isHidden ? _passIconShow: _passIconHide, 
-                  onPressed: () { 
-                    setState(() {
-                      _isHidden ? _isHidden = false: _isHidden = true;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10), 
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                        return 'Invalid Email';
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.email, color: notako_color.Colors.secondaryColor,),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                  ),
                 ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+                  child: Text(
+                    'Password',
+                    style: FontTypography.heading5,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10,), 
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
+                        return 'Password must be alphanumeric and must be at least 8 characters long.';
+                      }
+
+                      return null;
+                    },
+                    controller: passwordController,
+                    onTapOutside: (event) {
+                      setState(() {
+                        _isHidden = true;
+                      });
+                    },
+                    obscureText: _isHidden,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
+                      suffixIcon: IconButton(
+                        icon: _isHidden ? _passIconShow: _passIconHide, 
+                        onPressed: () { 
+                          setState(() {
+                            _isHidden ? _isHidden = false: _isHidden = true;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+                  child: Text(
+                    'Confirm Password',
+                    style: FontTypography.heading5,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20), 
+                  child: TextFormField(
+                    validator: (value) {
+                      if(passwordController.text.trim() != value || value == null || value.isEmpty) {
+                        return 'Passwords does not match';
+                      }
+
+                      return null;
+                    },
+                    controller: passwordConfirmationController,
+                    onTapOutside: (event) {
+                      setState(() {
+                        _isHidden = true;
+                      });
+                    },
+                    obscureText: _isHidden,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
+                      suffixIcon: IconButton(
+                        icon: _isHidden ? _passIconShow: _passIconHide, 
+                        onPressed: () { 
+                          setState(() {
+                            _isHidden ? _isHidden = false: _isHidden = true;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: notako_color.Colors.secondaryColor,
+                      padding: const EdgeInsets.all(15),
+                      minimumSize: const Size.fromHeight(50),
+                    ),
+                    onPressed: () async { 
+                      if(_regisFormKey.currentState!.validate()) {
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(content: Text('Processing Data')),
+                        // );
+
+                        try {
+                          await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+                          final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+
+                          ).then((value) => null);
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      }
+                    },
+                    child: const Text(
+                      'Login',
+                      style: FontTypography.regularText1,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () { 
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  }, 
+                  child: Center(
+                    child: Text(
+                      'Already have an account? Log-in here.',
+                      textAlign: TextAlign.center,
+                      style: FontTypography.regularText2.copyWith(
+                        color: notako_color.Colors.secondaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: notako_color.Colors.secondaryColor,
-                padding: const EdgeInsets.all(15)
-              ),
-              onPressed: () { 
-                
-              },
-              child: const Text(
-                'Login',
-                style: FontTypography.regularText1,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () { 
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
-            }, 
-            child: Text(
-              'Already have an account? Log-in here.',
-              textAlign: TextAlign.center,
-              style: FontTypography.regularText2.copyWith(
-                color: notako_color.Colors.secondaryColor,
-              ),
-            ),
-          ),
+          )
         ],
       ),
     );
+  }
+
+  void registerBtn() {
+
   }
 }
