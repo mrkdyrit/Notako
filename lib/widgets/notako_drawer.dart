@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
+import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
 
@@ -56,13 +58,16 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
           leading: const Icon(Icons.settings, color: iconColor, size: iconSize,),
           onTap: () { Navigator.pop(context); changeScreen(2); },
         ),
-        const ListTile(
+        ListTile(
           horizontalTitleGap: 0.0,
-          title: Text(
+          title: const Text(
             'Logout',
             style: navTextStyle
           ),
-          leading: Icon(Icons.exit_to_app, color: iconColor, size: iconSize,),
+          leading: const Icon(Icons.exit_to_app, color: iconColor, size: iconSize,),
+          onTap: () async {
+            await FirebaseAuth.instance.signOut();
+          },
         )
       ],
     ),

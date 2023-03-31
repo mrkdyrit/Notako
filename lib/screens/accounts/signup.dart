@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
 import 'package:notako_app/firebase_options.dart';
 import 'package:notako_app/screens/accounts/login.dart';
+import 'package:notako_app/screens/home/home.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +19,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
   bool _isHidden = true;
   final Icon _passIconShow = const Icon(Icons.visibility, color: notako_color.Colors.greyColor,);
   final Icon _passIconHide = const Icon(Icons.visibility_off, color: notako_color.Colors.greyColor,);
@@ -34,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10), 
@@ -168,24 +171,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () async { 
                       if(_regisFormKey.currentState!.validate()) {
                         try {
-                          await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+                          bool isLoggedIn = false;
 
                           final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
                           ).then((value) => {
                             if(value.user != null) {
+                              isLoggedIn = true,
                               SnackBarUtil.showSnackBar(context, 'Successfully Registered')
                             } else {
                               SnackBarUtil.showSnackBar(context, 'Failed to register user.')
-                            }
+                            },
                           });
 
-                          setState(() {
-                            emailController.clear();
-                            passwordController.clear();
-                            passwordConfirmationController.clear();
-                          });
+                          if(isLoggedIn) {
+                            setState(() {
+                              emailController.clear();
+                              passwordController.clear();
+                              passwordConfirmationController.clear();
+                            });
+                          }
+
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             SnackBarUtil.showSnackBar(context, 'The password provided is too weak.');

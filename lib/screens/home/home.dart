@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/screens/settings/settings.dart';
 import 'package:notako_app/screens/tags/tags.dart';
@@ -25,6 +27,30 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       shownScreen = index;
     });
+  }
+
+  late Stream<User?> _authStateStream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authStateStream = FirebaseAuth.instance.authStateChanges();
+    _authStateStream.listen((User? user) {
+      if (user == null) {
+        // redirect to sign-in page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
+    });
+  }
+  
+  @override
+  void dispose() {
+    _authStateStream.drain();
+    super.dispose();
   }
 
   @override
