@@ -7,6 +7,7 @@ import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notako_app/utils/snackbar_util.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -88,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
-                        return 'Password must be alphanumeric and must be at least 8 characters long.';
+                        return '• Passwords must be alphanumeric. \n• Passwords must be 8 characters long. \n• Password must contain at least one uppercase letter.';
                       }
 
                       return null;
@@ -166,23 +167,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     onPressed: () async { 
                       if(_regisFormKey.currentState!.validate()) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(content: Text('Processing Data')),
-                        // );
-
                         try {
                           await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
                           final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
+                          ).then((value) => {
+                            if(value.user != null) {
+                              SnackBarUtil.showSnackBar(context, 'Successfully Registered')
+                            } else {
+                              SnackBarUtil.showSnackBar(context, 'Failed to register user.')
+                            }
+                          });
 
-                          ).then((value) => null);
+                          setState(() {
+                            emailController.clear();
+                            passwordController.clear();
+                            passwordConfirmationController.clear();
+                          });
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
-                            print('The password provided is too weak.');
+                            SnackBarUtil.showSnackBar(context, 'The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
-                            print('The account already exists for that email.');
+                            SnackBarUtil.showSnackBar(context, 'The account already exists for that email.');
                           }
                         } catch (e) {
                           print(e);
@@ -190,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                     },
                     child: const Text(
-                      'Login',
+                      'Sign Up',
                       style: FontTypography.regularText1,
                     ),
                   ),
@@ -216,9 +224,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
-  }
-
-  void registerBtn() {
-
   }
 }
