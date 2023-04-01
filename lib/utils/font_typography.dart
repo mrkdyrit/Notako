@@ -32,9 +32,10 @@ class FontTypography {
   // Regular Text
   static const TextStyle regularText1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.normal, fontSize: fs4,);
   static const TextStyle regularText2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.normal, fontSize: fs5,);
+  static const TextStyle regularText3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.normal, fontSize: fs6,);
   
   // Muted Texts
-  static const mutedColor = notako_color.Colors.greyColor;
+  static const mutedColor = notako_color.Colors.contentColor;
 
   static const TextStyle mutedText1 = TextStyle(
     fontFamily: fontFamily, 
