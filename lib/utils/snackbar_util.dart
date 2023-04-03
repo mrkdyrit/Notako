@@ -3,7 +3,7 @@ import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 
 class SnackBarUtil {
-  static void showSnackBar(BuildContext context, String message) {
+  static void showSnackBar(BuildContext context, String message, {bool enableRootNavigator = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
