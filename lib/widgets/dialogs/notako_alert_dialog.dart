@@ -12,6 +12,8 @@ AlertDialog notakoAlertDialog({
   Function? onCancel,
 }) {
   return AlertDialog(
+    contentPadding: const EdgeInsets.only(left: 15.0, right: 15.0),
+    titlePadding: const EdgeInsets.only(bottom: 15.0, top:  15.0),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(15.0)),
     ),

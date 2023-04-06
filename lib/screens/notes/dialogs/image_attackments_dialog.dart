@@ -30,23 +30,38 @@ Widget imageAttachmentDialog({
                     pendingImages.clear();
                   },
                   children: [
-                    const Text(
-                      'Attach images from your camera or gallery.',
-                      style: FontTypography.mutedText3,
-                      textAlign: TextAlign.center,
-                    ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      child: Divider(
-                        thickness: 1.5,
-                        color: notako_color.Colors.greyColor,
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: Text(
+                        'Attach images from your camera or gallery.',
+                        style: FontTypography.mutedText3,
+                        textAlign: TextAlign.center,
                       ),
                     ),
+                    // const Padding(
+                    //   padding: EdgeInsets.only(top: 10, bottom: 10),
+                    //   child: Divider(
+                    //     thickness: 1.5,
+                    //     color: notako_color.Colors.greyColor,
+                    //   ),
+                    // ),
                     // * Checks whether the user has selected images or not
                     if(pendingImages.isEmpty) ...[
-                      // * Shows the media source selection
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0),
+                      Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 1.5,
+                              color: notako_color.Colors.greyColor,
+                            ),
+                            bottom: BorderSide(
+                              width: 1.5,
+                              color: notako_color.Colors.greyColor,
+                            ),
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -118,9 +133,10 @@ Widget imageAttachmentDialog({
                               ),
                             ],
                           ),
-                        )
+                        ),
+                      )
                     ] else ...[
-                      const Text('test lang')
+                      
                     ],
                   ],
                 );

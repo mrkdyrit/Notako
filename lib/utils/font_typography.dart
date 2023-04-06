@@ -25,9 +25,9 @@ class FontTypography {
   static const TextStyle heading5 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs5, color: ColorConfig.headingColor,);
 
   // Sub-headings
-  static const TextStyle subHeading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs2,);
-  static const TextStyle subHeading2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs3,);
-  static const TextStyle subHeading3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs4,);
+  static const TextStyle subHeading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs2, color: ColorConfig.headingColor,);
+  static const TextStyle subHeading2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs3, color: ColorConfig.headingColor,);
+  static const TextStyle subHeading3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs4, color: ColorConfig.headingColor,);
 
   // Regular Text
   static const TextStyle regularText1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.normal, fontSize: fs4,);
