@@ -21,6 +21,7 @@ Widget imageAttachmentDialog({
               builder: (context, setState) {
                 return notakoAlertDialog(
                   titleText: 'Images', 
+                  alertDescription: 'Attach images from your camera or gallery.',
                   titleIcon: Icons.photo, 
                   context: context,
                   onSubmit: () {
@@ -30,14 +31,6 @@ Widget imageAttachmentDialog({
                     pendingImages.clear();
                   },
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Text(
-                        'Attach images from your camera or gallery.',
-                        style: FontTypography.mutedText3,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
                     // const Padding(
                     //   padding: EdgeInsets.only(top: 10, bottom: 10),
                     //   child: Divider(

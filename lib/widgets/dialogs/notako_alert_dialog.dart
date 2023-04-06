@@ -5,6 +5,7 @@ import 'package:notako_app/utils/colors.dart' as notako_color;
 
 AlertDialog notakoAlertDialog({
   required String titleText,
+  required String alertDescription,
   required IconData titleIcon,
   required BuildContext context,
   required List<Widget> children,
@@ -34,7 +35,17 @@ AlertDialog notakoAlertDialog({
     ),
     content: Column(
       mainAxisSize: MainAxisSize.min,
-      children: children,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Text(
+            alertDescription,
+            style: FontTypography.mutedText3,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        ...children
+      ],
     ),
     actions: [
       TextButton(

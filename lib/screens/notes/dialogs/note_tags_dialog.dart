@@ -17,13 +17,9 @@ Widget noteTagsDialog({
               builder: (context, setState) {
                 return notakoAlertDialog(
                   titleText: 'Note Tags', titleIcon: Icons.sell,
+                  alertDescription: 'Add up to five tags to organize your note.',
                   context: context,
                   children: [
-                    const Text(
-                      'Add up to five tags to organize your note.',
-                      style: FontTypography.mutedText3,
-                      textAlign: TextAlign.center,
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 25),
                       child: TextFormField(
