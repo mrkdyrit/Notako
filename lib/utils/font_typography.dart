@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:notako_app/utils/color_config.dart';
 
 class FontTypography {
   // Font Family
@@ -18,11 +18,11 @@ class FontTypography {
   // Text Styles
 
   // Headings
-  static const TextStyle heading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs1,);
-  static const TextStyle heading2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs2,);
-  static const TextStyle heading3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs3,);
-  static const TextStyle heading4 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs4,);
-  static const TextStyle heading5 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs5,);
+  static const TextStyle heading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs1, color: ColorConfig.headingColor,);
+  static const TextStyle heading2 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs2, color: ColorConfig.headingColor,);
+  static const TextStyle heading3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs3, color: ColorConfig.headingColor,);
+  static const TextStyle heading4 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs4, color: ColorConfig.headingColor,);
+  static const TextStyle heading5 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: fs5, color: ColorConfig.headingColor,);
 
   // Sub-headings
   static const TextStyle subHeading1 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w500, fontSize: fs2,);
@@ -35,47 +35,46 @@ class FontTypography {
   static const TextStyle regularText3 = TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.normal, fontSize: fs6,);
   
   // Muted Texts
-  static const mutedColor = notako_color.Colors.contentColor;
 
   static const TextStyle mutedText1 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs2, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 
   static const TextStyle mutedText2 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs4, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 
   static const TextStyle mutedText3 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs5, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 
   static const TextStyle mutedText4 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs6, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 
   static const TextStyle mutedText5 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs7, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 
   static const TextStyle mutedText6 = TextStyle(
     fontFamily: fontFamily, 
     fontWeight: FontWeight.normal, 
     fontSize: fs8, 
-    color: mutedColor
+    color: ColorConfig.mutedColor
   );
 }
