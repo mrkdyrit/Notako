@@ -52,11 +52,20 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ListTile(
           horizontalTitleGap: 0.0,
           title: const Text(
+            'Help',
+            style: navTextStyle
+          ),
+          leading: const Icon(Icons.question_mark, color: iconColor, size: iconSize,),
+          onTap: () { Navigator.pop(context); changeScreen(2); },
+        ),
+        ListTile(
+          horizontalTitleGap: 0.0,
+          title: const Text(
             'Settings',
             style: navTextStyle
           ),
           leading: const Icon(Icons.settings, color: iconColor, size: iconSize,),
-          onTap: () { Navigator.pop(context); changeScreen(2); },
+          onTap: () { Navigator.pop(context); changeScreen(3); },
         ),
         ListTile(
           horizontalTitleGap: 0.0,

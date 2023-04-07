@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/accounts/login.dart';
+import 'package:notako_app/screens/help/help.dart';
 import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/screens/settings/settings.dart';
 import 'package:notako_app/screens/tags/tags.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screenList = [
     const NoteScreen(),
     const TagsScreen(),
+    const HelpScreen(),
     const SettingScreen(),
   ];
 
