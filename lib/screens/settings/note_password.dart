@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotePasswordScreen extends StatefulWidget {
   const NotePasswordScreen({super.key});
@@ -19,6 +20,30 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
 
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
+
+  List<String> passwordOptions = <String>['None', 'Password', 'PIN'];
+
+  String selectedPasswordOption = '';
+
+  void setSelectedPasswordOption(String value) async {
+    final SharedPreferences prefs =  await SharedPreferences.getInstance();
+    prefs.setString('selectedPasswordOption', value);
+  }
+
+  void getSelectedPasswordOption() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      selectedPasswordOption = prefs.getString('selectedPasswordOption') ?? 'None';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getSelectedPasswordOption();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +66,51 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
               style: FontTypography.heading3,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(left: 7, top: 15),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  items: passwordOptions.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    
+                    setSelectedPasswordOption(value!);
+
+                    setState(() {
+                      selectedPasswordOption = value;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.expand_more, 
+                    color: notako_color.Colors.secondaryColor,
+                  ),
+                  hint:  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Password Type',
+                            style: FontTypography.subHeading2,
+                          ),
+                          Text(
+                            selectedPasswordOption,
+                            style: FontTypography.mutedText3,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 0,),
               child: TextButton(
                 onPressed: () {
                   showDialog(

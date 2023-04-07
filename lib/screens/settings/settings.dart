@@ -41,7 +41,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           style: FontTypography.subHeading2,
                         ),
                         Text(
-                          'Set up or remove NotaKo’s note password.',
+                          'Set up or remove NotaKo`s note password.',
                           style: FontTypography.mutedText3,
                         ),
                       ],
