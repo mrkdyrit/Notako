@@ -15,4 +15,9 @@ class Assets {
   static const String logoPNGPath = "$imagePath${logoPath}png/";
 
   static const String pngLogoOnly = "${logoPNGPath}notako_logo_only.png";
+
+  // Help images
+  static const String helpImagesPath = "${imagePath}help/";
+
+  static const String helpCreateNotes = "${helpImagesPath}help_create_notes.png";
 }

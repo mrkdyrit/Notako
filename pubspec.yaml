@@ -14,7 +14,6 @@ dependencies:
   flutter_svg: ^0.22.0
   image_picker: 
   shared_preferences:
-  flutter_onboarding_slider: ^1.0.9
 
 dev_dependencies:
   flutter_test:

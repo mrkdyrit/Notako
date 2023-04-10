@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
+import 'package:notako_app/screens/help/help_create_notes.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -9,14 +9,22 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
+  List<Widget> helpPageSlides = [
+    const HelpCreateNotesScreen()
+  ];
+
+  final pageViewController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: OnBoardingSlider(
-      //   totalPage: 5,
-      //   headerBackgroundColor: Colors.white,
-
-      // ),
+      body: PageView.builder(
+        itemCount: helpPageSlides.length,
+        controller: pageViewController,
+        itemBuilder: (context, index) {
+          return helpPageSlides[index];
+        },
+      ),
     );
   }
 }
