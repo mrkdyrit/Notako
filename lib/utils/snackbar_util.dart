@@ -13,6 +13,7 @@ class SnackBarUtil {
           ),
         ),
         backgroundColor: Colors.white,
+        duration: const Duration(seconds: 2),
         elevation: 5.0,
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(

@@ -26,9 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   // Login Form
   final _loginFormKey = GlobalKey<FormState>();
 
+  final GlobalKey<NavigatorState> loginScaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: loginScaffoldKey,
       body: ListView(
         shrinkWrap: true,
         children: [
@@ -133,11 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: passwordController.text.trim()
                           ).then((value) => {
                             if(value.user != null) {
-                              SnackBarUtil.showSnackBar(context, 'Signed in as ${emailController.text.trim()}'),
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) => const HomeScreen()),
-                              )
+                              ),
+                              // Navigator.pop(context),
                             }
                           });
 

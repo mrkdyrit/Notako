@@ -14,6 +14,7 @@ dependencies:
   flutter_svg: ^0.22.0
   image_picker: 
   shared_preferences:
+  flutter_onboarding_slider: ^1.0.9
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +26,7 @@ flutter:
   assets:
     - lib/assets/images/logo/svg/
     - lib/assets/images/logo/png/
+    - lib/assets/images/help/
     - lib/assets/fonts/
   fonts:
     - family: DM-Sans

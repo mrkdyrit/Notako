@@ -75,7 +75,9 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
           ),
           leading: const Icon(Icons.exit_to_app, color: iconColor, size: iconSize,),
           onTap: () async {
-            await FirebaseAuth.instance.signOut();
+            if(FirebaseAuth.instance.currentUser != null) {
+              await FirebaseAuth.instance.signOut();
+            }
           },
         )
       ],
