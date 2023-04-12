@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/help/help_create_notes.dart';
+import 'package:notako_app/screens/help/help_image_attachments.dart';
+import 'package:notako_app/screens/help/help_lock_notes.dart';
+import 'package:notako_app/screens/help/help_note_tags.dart';
+import 'package:notako_app/screens/help/help_welcome.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 
 class HelpScreen extends StatefulWidget {
@@ -11,11 +15,17 @@ class HelpScreen extends StatefulWidget {
 
 class _HelpScreenState extends State<HelpScreen> {
   List<Widget> helpPageSlides = [
+    const HelpWelcomeScreen(),
     const HelpCreateNotesScreen(),
-    const HelpCreateNotesScreen(),
+    const HelpNoteTagsScreen(),
+    const HelpImageAttachmentsScreen(),
+    const HelpLockNotesScreen(),
   ];
 
   final pageViewController = PageController(viewportFraction: 1.1);
+
+  bool isLastPage = false;
+  String buttonText = 'Next';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +42,17 @@ class _HelpScreenState extends State<HelpScreen> {
                   child: helpPageSlides[index],
                 );
               },
+              onPageChanged: (index) {
+                setState(() {
+                  if(index == helpPageSlides.length - 1) {
+                    isLastPage = true;
+                    buttonText = 'Finish';
+                  } else {
+                    isLastPage = false;
+                    buttonText = 'Next';
+                  }
+                });
+              },
             ),
           ),
           Padding(
@@ -43,9 +64,15 @@ class _HelpScreenState extends State<HelpScreen> {
                 minimumSize: const Size.fromHeight(50),
               ),
               onPressed: () {
-                pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                if(isLastPage) {
+                  Navigator.of(context).pop();
+                } else {
+                  pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                }
               }, 
-              child: const Text('Next')
+              child: Text(
+                buttonText
+              )
             ),
           ),
           const Padding(

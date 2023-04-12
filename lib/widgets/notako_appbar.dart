@@ -7,10 +7,10 @@ AppBar notakoAppBar() {
   return AppBar(
     backgroundColor: Colors.white,
     title: SvgPicture.asset(
-        Assets.svgLogoHorizontal,
-        height: 22,
-        width: 100,
-      ),
+      Assets.svgLogoHorizontal,
+      height: 22,
+      width: 100,
+    ),
     centerTitle: true,
     elevation: 0,
     iconTheme: const IconThemeData(color: notako_color.Colors.secondaryColor),

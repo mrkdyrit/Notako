@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
+import 'package:notako_app/screens/help/help.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
 
@@ -55,7 +56,10 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
             style: navTextStyle
           ),
           leading: const Icon(Icons.question_mark, color: iconColor, size: iconSize,),
-          onTap: () { Navigator.pop(context); changeScreen(2); },
+          onTap: () { 
+            Navigator.pop(context); 
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpScreen()),);
+          },
         ),
         ListTile(
           horizontalTitleGap: 0.0,

@@ -20,4 +20,5 @@ class Assets {
   static const String helpImagesPath = "${imagePath}help/";
 
   static const String helpSampleImageAttachment = "${helpImagesPath}help_sample_image_attachment.png";
+  static const String helpEmptyNoteIndicator = "${helpImagesPath}help_empty_note_indicator.png";
 }
