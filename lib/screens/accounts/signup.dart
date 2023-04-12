@@ -1,8 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
-import 'package:notako_app/firebase_options.dart';
 import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/screens/home/home.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
@@ -200,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     SnackBarUtil.showSnackBar(context, 'The account already exists for that email.');
                                   }
                                 } catch (e) {
-                                  print(e);
+                                  SnackBarUtil.showSnackBar(context, 'Something went wrong.');
                                 }
                               }
                             },

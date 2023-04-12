@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:notako_app/screens/notes/dialogs/image_attackments_dialog.dart';
+import 'package:notako_app/screens/notes/dialogs/image_attachments_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_locked_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_tags_dialog.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/font_typography.dart';
-import 'package:notako_app/utils/snackbar_util.dart';
 
 
 class CreateNoteScreen extends StatefulWidget {

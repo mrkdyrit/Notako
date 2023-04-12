@@ -1,14 +1,11 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/screens/help/help.dart';
 import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/screens/settings/settings.dart';
 import 'package:notako_app/screens/tags/tags.dart';
-import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/widgets/notako_appbar.dart';
 import 'package:notako_app/widgets/notako_drawer.dart';
 

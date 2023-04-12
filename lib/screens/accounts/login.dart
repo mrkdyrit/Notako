@@ -135,8 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () async { 
                               if(_loginFormKey.currentState!.validate()) {
 
-                                bool isLoggedIn = false;
-
                                 try {
                                   await FirebaseAuth.instance.signInWithEmailAndPassword(
                                     email: emailController.text.trim(),
