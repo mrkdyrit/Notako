@@ -4,12 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notako_app/assets/assets.dart';
 import 'package:notako_app/screens/help/help.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
-import 'package:notako_app/utils/font_typography.dart';
+import 'package:notako_app/utils/v2/font_typography.dart';
 
 Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
   const double iconSize = 30;
   const Color iconColor = notako_color.Colors.secondaryColor;
-  const TextStyle navTextStyle = FontTypography.subHeading1;
+
+  double screenWidth = MediaQuery.of(context).size.width;
+
+  TextStyle navTextStyle = NotakoTypography.subHeading.copyWith(
+    fontSize: NotakoTypography.calculateFontSize(screenWidth,  NotakoTypography.fs5),
+  );
 
   return Drawer(
     child: ListView(
@@ -28,12 +33,15 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
                 ),
               ),
             ),
-            child: SvgPicture.asset(Assets.svgLogoHorizontal),
+            child: SizedBox(
+              height: 56,
+              child: SvgPicture.asset(Assets.svgLogoHorizontal,),
+            ),
           ),
         ),
         ListTile(
           horizontalTitleGap: 0.0,
-          title: const Text(
+          title: Text(
             'My Notes',
             style: navTextStyle
           ),
@@ -42,7 +50,7 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ),
         ListTile(
           horizontalTitleGap: 0.0,
-          title: const Text(
+          title: Text(
             'Note Tags',
             style: navTextStyle
           ),
@@ -51,7 +59,7 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ),
         ListTile(
           horizontalTitleGap: 0.0,
-          title: const Text(
+          title: Text(
             'Help',
             style: navTextStyle
           ),
@@ -63,7 +71,7 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ),
         ListTile(
           horizontalTitleGap: 0.0,
-          title: const Text(
+          title: Text(
             'Settings',
             style: navTextStyle
           ),
@@ -72,7 +80,7 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ),
         ListTile(
           horizontalTitleGap: 0.0,
-          title: const Text(
+          title: Text(
             'Logout',
             style: navTextStyle
           ),

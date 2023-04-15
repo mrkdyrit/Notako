@@ -10,85 +10,92 @@ Widget helpCreateNotesImage({
   required double imageWidth,
   required double imageHeight,
 }) {
-  Widget addIcon() {
-    return Container(
-      height: imageHeight,
-      width: imageWidth,
-      alignment: Alignment.bottomRight,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 20),
-        child: Container(
-          height: 60,
-          width: 60,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: notako_color.Colors.secondaryColor,
-          ),
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget addIcon() {
+  //   return Container(
+  //     height: imageHeight,
+  //     width: imageWidth,
+  //     alignment: Alignment.bottomRight,
+  //     child: Padding(
+  //       padding: const EdgeInsets.only(right: 20),
+  //       child: Container(
+  //         height: 60,
+  //         width: 60,
+  //         decoration: const BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           color: notako_color.Colors.secondaryColor,
+  //         ),
+  //         child: const Icon(
+  //           Icons.add,
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget noteScreenPreviewContent() {
-    return Container(
-      width: 300,
-      height: imageHeight,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Stack(
-        children: [
-          Center(
-            child: Wrap(
-              direction: Axis.vertical,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: Image.asset(Assets.helpEmptyNoteIndicator,),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Text(
-                    'No Notes',
-                    style: TextStyle(
-                      color: notako_color.Colors.primaryColor,
-                      fontWeight: FontWeight.bold
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        width: 300,
+        height: imageHeight - 20,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: SmoothBorderRadius(
+            cornerRadius: 15,
+            cornerSmoothing: 1,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Wrap(
+                direction: Axis.vertical,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset(Assets.helpEmptyNoteIndicator,),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'No Notes',
+                      style: TextStyle(
+                        color: notako_color.Colors.primaryColor,
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
-                ),
-                const Text(
-                  'Get started with a new note.',
-                  style: FontTypography.mutedText4
-                ),
-              ],
+                  const Text(
+                    'Get started with a new note.',
+                    style: FontTypography.mutedText4
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: notako_color.Colors.secondaryColor,
-                ),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
+            Container(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: notako_color.Colors.secondaryColor,
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 
@@ -115,7 +122,11 @@ Widget helpCreateNotesImage({
     ),
     child: Stack(
       children: [
-        addIcon(),
+        Transform.scale(
+          alignment: Alignment.bottomCenter,
+          scale: 1.75,
+          child: noteScreenPreview(),
+        ),
         backdrop(imageHeight: imageHeight, imageWidth: imageWidth),
         noteScreenPreview(),
       ],

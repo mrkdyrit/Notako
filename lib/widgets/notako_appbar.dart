@@ -4,15 +4,21 @@ import 'package:notako_app/assets/assets.dart';
 import 'package:notako_app/utils/colors.dart'  as notako_color ;
 
 AppBar notakoAppBar() {
-  return AppBar(
+  AppBar appbar = AppBar(
     backgroundColor: Colors.white,
-    title: SvgPicture.asset(
-      Assets.svgLogoHorizontal,
-      height: 22,
-      width: 100,
+    title: SizedBox(
+      height: 56,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: SvgPicture.asset(
+          Assets.svgLogoHorizontal,
+        ),
+      ),
     ),
     centerTitle: true,
     elevation: 0,
     iconTheme: const IconThemeData(color: notako_color.Colors.secondaryColor),
   );
+
+  return appbar;
 }

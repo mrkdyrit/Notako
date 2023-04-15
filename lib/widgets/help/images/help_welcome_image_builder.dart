@@ -65,7 +65,10 @@ Widget helpWelcomeImage({
     ),
     child: Stack(
       children: [
-        notePreview(),
+        Transform.scale(
+          scale: 1.15,
+          child: notePreview(),
+        ),
         backdrop(imageHeight: imageHeight, imageWidth: imageWidth),
         centeredLogo()
       ],

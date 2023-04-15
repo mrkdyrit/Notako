@@ -5,6 +5,7 @@ import 'package:notako_app/screens/help/help_lock_notes.dart';
 import 'package:notako_app/screens/help/help_note_tags.dart';
 import 'package:notako_app/screens/help/help_welcome.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:notako_app/utils/v2/font_typography.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -29,6 +30,8 @@ class _HelpScreenState extends State<HelpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         children: [
@@ -55,23 +58,31 @@ class _HelpScreenState extends State<HelpScreen> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: notako_color.Colors.secondaryColor,
-                padding: const EdgeInsets.all(15),
-                minimumSize: const Size.fromHeight(50),
-              ),
-              onPressed: () {
-                if(isLastPage) {
-                  Navigator.of(context).pop();
-                } else {
-                  pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
-                }
-              }, 
-              child: Text(
-                buttonText
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: SizedBox(
+                width: screenWidth > 500 ? 500 : screenWidth * 0.9,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: notako_color.Colors.secondaryColor,
+                    padding: const EdgeInsets.all(15),
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                  onPressed: () {
+                    if(isLastPage) {
+                      Navigator.of(context).pop();
+                    } else {
+                      pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                    }
+                  }, 
+                  child: Text(
+                    buttonText,
+                    style: NotakoTypography.bodyText.copyWith(
+                      fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs6)
+                    ),
+                  )
+                ),
               )
             ),
           ),

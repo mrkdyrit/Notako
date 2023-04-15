@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/notes/create_note.dart';
+import 'package:notako_app/widgets/help/images/help_welcome_image_builder.dart';
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({super.key});
@@ -22,9 +23,7 @@ class _NoteScreenState extends State<NoteScreen> {
         child: const Icon(Icons.add),
       ),
       body: const Center(
-        child: Text(
-          'Note Screen'
-        ),
+        child: Text('Test s')
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notako_app/utils/font_typography.dart';
+import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 
 class SnackBarUtil {
@@ -8,8 +8,9 @@ class SnackBarUtil {
       SnackBar(
         content: Text(
           message,
-          style: FontTypography.regularText3.copyWith(
-            color: Colors.black
+          style: NotakoTypography.bodyText.copyWith(
+            fontSize: NotakoTypography.calculateFontSize(MediaQuery.of(context).size.width, NotakoTypography.fs6),
+            color: Colors.black,
           ),
         ),
         backgroundColor: Colors.white,

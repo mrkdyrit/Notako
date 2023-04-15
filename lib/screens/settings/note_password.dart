@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,6 +48,8 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,9 +64,11 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
         padding: const EdgeInsets.all(15),
         child: ListView(
           children: [
-            const Text(
+            Text(
               'Note Password',
-              style: FontTypography.heading3,
+              style: NotakoTypography.heading.copyWith(
+                fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 7, top: 15),
@@ -94,13 +99,17 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Password Type',
-                            style: FontTypography.subHeading2,
+                            style: NotakoTypography.subHeading.copyWith(
+                              fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
+                            ),
                           ),
                           Text(
                             selectedPasswordOption,
-                            style: FontTypography.mutedText3,
+                            style: NotakoTypography.mutedText.copyWith(
+                              fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs6)
+                            ),
                           ),
                         ],
                       ),
@@ -214,14 +223,18 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Change Password',
-                          style: FontTypography.subHeading2,
+                          style: NotakoTypography.subHeading.copyWith(
+                            fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
+                          ),
                         ),
                         Text(
                           'Password not set',
-                          style: FontTypography.mutedText3,
+                          style: NotakoTypography.mutedText.copyWith(
+                            fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs6)
+                          ),
                         ),
                       ],
                     ),
