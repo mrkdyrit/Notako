@@ -4,6 +4,7 @@ import 'package:notako_app/screens/help/help_image_attachments.dart';
 import 'package:notako_app/screens/help/help_lock_notes.dart';
 import 'package:notako_app/screens/help/help_note_tags.dart';
 import 'package:notako_app/screens/help/help_welcome.dart';
+import 'package:notako_app/screens/home/home.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/v2/font_typography.dart';
 
@@ -25,8 +26,18 @@ class _HelpScreenState extends State<HelpScreen> {
 
   final pageViewController = PageController(viewportFraction: 1.1);
 
+  List<String> slidesStatus = [
+    'true',
+    'false',
+    'false',
+    'false',
+    'false',
+  ];
+
   bool isLastPage = false;
   String buttonText = 'Next';
+
+  bool activeScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +64,16 @@ class _HelpScreenState extends State<HelpScreen> {
                   } else {
                     isLastPage = false;
                     buttonText = 'Next';
+                  }
+
+                  slidesStatus.clear();
+
+                  for(int i = 0; i <= helpPageSlides.length - 1; i++){
+                    if(index == i) {
+                      slidesStatus.add('true');
+                    } else {
+                      slidesStatus.add('false');
+                    }
                   }
                 });
               },
@@ -86,10 +107,22 @@ class _HelpScreenState extends State<HelpScreen> {
               )
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 8,),
-            child: Center(
-              child: Text('. . .'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8,),
+            child: SizedBox(
+              width: 70,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ...slidesStatus.map((isActive) {
+                    return Icon(
+                      Icons.circle,
+                      size: 10,
+                      color: isActive == 'true' ? notako_color.Colors.secondaryColor : notako_color.Colors.greyColor,
+                    );
+                  })
+                ],
+              ),
             ),
           )
         ],

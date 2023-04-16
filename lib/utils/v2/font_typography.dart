@@ -26,6 +26,7 @@ class NotakoTypography {
     if(screenWidth >= 1200) {
       calculatedFontSize = initialFontSize * 1.75;
     }
+    
 
     if(screenWidth >= 992) {
       calculatedFontSize = initialFontSize * 1.5;

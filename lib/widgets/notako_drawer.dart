@@ -66,7 +66,7 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
           leading: const Icon(Icons.question_mark, color: iconColor, size: iconSize,),
           onTap: () { 
             Navigator.pop(context); 
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpScreen()),);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpScreen()));
           },
         ),
         ListTile(

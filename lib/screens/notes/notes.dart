@@ -23,7 +23,7 @@ class _NoteScreenState extends State<NoteScreen> {
         child: const Icon(Icons.add),
       ),
       body: const Center(
-        child: Text('Test s')
+        child: Text('Tesdsdasds')
       ),
     );
   }

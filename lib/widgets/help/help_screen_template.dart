@@ -31,7 +31,7 @@ Widget helpScreenTemplate({
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8,),
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: Wrap(
                       children: helpDescription,
                     ),
