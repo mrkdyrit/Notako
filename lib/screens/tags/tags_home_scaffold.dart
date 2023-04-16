@@ -70,6 +70,7 @@ Scaffold tagsHomeScaffold({
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
               runSpacing: 10,
               spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
               children: [
