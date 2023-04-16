@@ -21,13 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int shownScreen = 0;
 
-  List<Widget> screenList = [
-    const NoteScreen(),
-    const TagsScreen(),
-    const HelpScreen(),
-    const SettingScreen(),
-  ];
-
   void changeScreen(int index) {
     setState(() {
       shownScreen = index;
@@ -63,6 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> screenList = [
+      const NoteScreen(),
+      TagsScreen(changeScreen: changeScreen),
+      const HelpScreen(),
+      const SettingScreen(),
+    ];
+
     return Scaffold(
       key: homeScaffoldKey,
       appBar: notakoAppBar(),

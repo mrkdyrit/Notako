@@ -60,18 +60,6 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
         ListTile(
           horizontalTitleGap: 0.0,
           title: Text(
-            'Help',
-            style: navTextStyle
-          ),
-          leading: const Icon(Icons.question_mark, color: iconColor, size: iconSize,),
-          onTap: () { 
-            Navigator.pop(context); 
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpScreen()));
-          },
-        ),
-        ListTile(
-          horizontalTitleGap: 0.0,
-          title: Text(
             'Settings',
             style: navTextStyle
           ),
@@ -90,7 +78,19 @@ Drawer notakoDrawer(BuildContext context, Function(int) changeScreen) {
               await FirebaseAuth.instance.signOut();
             }
           },
-        )
+        ),
+        ListTile(
+          horizontalTitleGap: 0.0,
+          title: Text(
+            'Help',
+            style: navTextStyle
+          ),
+          leading: const Icon(Icons.question_mark, color: iconColor, size: iconSize,),
+          onTap: () { 
+            Navigator.pop(context); 
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpScreen()));
+          },
+        ),
       ],
     ),
   );
