@@ -3,9 +3,9 @@ import 'package:notako_app/screens/tags/tags_home_scaffold.dart';
 import 'package:notako_app/screens/tags/tags_search_scaffold.dart';
 
 class TagsScreen extends StatefulWidget {
-  final void Function(int) changeScreen;
+  // final void Function(int) changeScreen;
 
-  const TagsScreen({super.key, required this.changeScreen});
+  const TagsScreen({super.key});
 
   @override
   State<TagsScreen> createState() => _TagsScreenState();

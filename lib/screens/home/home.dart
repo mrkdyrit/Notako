@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/accounts/login.dart';
@@ -19,11 +20,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final homeScaffoldKey = GlobalKey();
 
-  int shownScreen = 0;
+  // Initialize to the 'home' screen of the app.
+  Widget shownScreen = const NoteScreen();
 
-  void changeScreen(int index) {
+  void changeScreen(Widget screenToShow) {
     setState(() {
-      shownScreen = index;
+      shownScreen = screenToShow;
     });
   }
 
@@ -56,18 +58,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screenList = [
-      const NoteScreen(),
-      TagsScreen(changeScreen: changeScreen),
-      const HelpScreen(),
-      const SettingScreen(),
+    final List<Map<String, dynamic>> screenList = [
+      {
+        'name': 'My Notes',
+        'details':  {
+          'icon': Icons.description,
+          'screen': const NoteScreen(),
+        },
+      },
+      {
+        'name': 'Note Tags',
+        'details':  {
+          'icon': Icons.discount,
+          'screen': const TagsScreen(),
+        },
+      },
+      {
+        'name': 'Settings',
+        'details':  {
+          'icon': Icons.settings,
+          'screen': const SettingScreen(),
+        },
+      },
+      // {
+      //   'name': 'Help',
+      //   'details':  {
+      //     'icon': Icons.question_mark,
+      //     'screen': const HelpScreen(),
+      //   },
+      // },
     ];
 
     return Scaffold(
       key: homeScaffoldKey,
-      appBar: notakoAppBar(),
-      drawer: notakoDrawer(context, changeScreen),
-      body: screenList[shownScreen],
+      appBar: const NotakoAppBar(),
+      drawer: NotakoNavDrawer(
+        screenList: screenList,
+        changeScreen: changeScreen
+      ),
+      body: shownScreen,
     );
   }
-}
+} 
