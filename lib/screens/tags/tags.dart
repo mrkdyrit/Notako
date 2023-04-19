@@ -14,30 +14,26 @@ class TagsScreen extends StatefulWidget {
 class _TagsScreenState extends State<TagsScreen> {
 
   bool isSearchMode = false;
-  String tagToBeSearch = '';
+  String tagIdToBeSearched = '';
 
-  void toggleSearchMode(String? tagToBeSearched) {
+  void toggleSearchMode(String? tagId) {
     setState(() {
-      // isSearchMode = !isSearchMode;
-      // tagToBeSearch = tagToBeSearched;
       if(!isSearchMode) {
         isSearchMode = true;
-        tagToBeSearch = tagToBeSearched!;
+        tagIdToBeSearched = tagId!;
       } else {
         isSearchMode = false;
-        tagToBeSearch = '';
+        tagIdToBeSearched = '';
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     if(isSearchMode) {
-      return tagSearchScaffold(screenWidth: screenWidth, tagToBeSearch: tagToBeSearch, context: context, changeMode: toggleSearchMode);
+      return NoteTagSearch(goBack: toggleSearchMode, tagId: tagIdToBeSearched);
     } else {
-      return tagsHomeScaffold(screenWidth: screenWidth, changeMode: toggleSearchMode);
+      return NoteTagsHome(searchTag: toggleSearchMode,);
     }
   }
 }
