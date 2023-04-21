@@ -90,7 +90,7 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
                 child: Wrap(
                   alignment: WrapAlignment.spaceBetween,
                   runSpacing: 10,
-                  spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
+                  spacing: 10,
                   children: [
                     for(var tag in noteTagData) ...[
                       InkWell(
@@ -99,7 +99,7 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
                         },
                         child: SizedBox(
                           // height: 36,
-                          width: 150,
+                          width: 140,
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
