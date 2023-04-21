@@ -1,3 +1,4 @@
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/notes/dialogs/image_attachments_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_locked_dialog.dart';
@@ -108,6 +109,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                 spacing: 8.0, // spacing between columns
                 runSpacing: 4.0,
                 children: [
+                  
                 ],
               ),
             ],

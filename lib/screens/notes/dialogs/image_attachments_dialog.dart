@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notako_app/utils/font_typography.dart';
@@ -8,7 +11,7 @@ Widget imageAttachmentDialog({
   required BuildContext context,
   required Size size,
 }) {
-  var pendingImages = []; // List of selected images but not yet added to note.
+  List<XFile> pendingImages = []; // List of selected images but not yet added to note.
 
   return SizedBox.fromSize(
     size: size,
@@ -31,13 +34,6 @@ Widget imageAttachmentDialog({
                     pendingImages.clear();
                   },
                   children: [
-                    // const Padding(
-                    //   padding: EdgeInsets.only(top: 10, bottom: 10),
-                    //   child: Divider(
-                    //     thickness: 1.5,
-                    //     color: notako_color.Colors.greyColor,
-                    //   ),
-                    // ),
                     // * Checks whether the user has selected images or not
                     if(pendingImages.isEmpty) ...[
                       Container(
@@ -82,8 +78,15 @@ Widget imageAttachmentDialog({
                                         ),
                                       ],
                                     ),
-                                    onTap: () {
-                                      // getImage(ImageSource.camera);
+                                    onTap: () async {
+                                      // Select an image
+                                      var image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+                                      if(image != null) {
+                                        setState(() {
+                                          pendingImages.add(image);
+                                        });
+                                      }
                                     },
                                   ),
                                 )
@@ -117,9 +120,8 @@ Widget imageAttachmentDialog({
                                       var image = await ImagePicker().pickMultiImage();
 
                                       setState(() {
-                                        pendingImages.add(image);
+                                        pendingImages = List.from(image);
                                       });
-                                      // getImage(ImageSource.gallery);
                                     },
                                   ),
                                 )
@@ -129,7 +131,57 @@ Widget imageAttachmentDialog({
                         ),
                       )
                     ] else ...[
-                      
+                      Wrap(
+                        children: [
+                          for (XFile image in pendingImages) ...[
+                            SizedBox(
+                              width: 72,
+                              height: 79,
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 64.26,
+                                    height: 73,
+                                    child: ClipRRect(
+                                      borderRadius: SmoothBorderRadius(
+                                        cornerRadius: 10,
+                                        cornerSmoothing: 1,
+                                      ),
+                                      child: Image.file(
+                                        fit: BoxFit.fill,
+                                        File(image.path),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.topRight,
+                                    child: InkWell(
+                                      child: SizedBox(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: notako_color.Colors.primaryColor,
+                                            borderRadius: BorderRadius.circular(100),
+                                          ),
+                                          child: const Icon(
+                                            Icons.close,
+                                            size: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          pendingImages.remove(image);
+                                        });
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ],
+                      )
                     ],
                   ],
                 );

@@ -30,7 +30,7 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        body: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
@@ -84,59 +84,61 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                runSpacing: 10,
-                spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
-                children: [
-                  for(var tag in noteTagData) ...[
-                    InkWell(
-                      onTap: () {
-                        widget.searchTag(tag['id']);
-                      },
-                      child: SizedBox(
-                        // height: 36,
-                        width: 150,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: SmoothBorderRadius(
-                              cornerRadius: 5,
-                              cornerSmoothing: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  tag['tag_name'],
-                                  style: NotakoTypography.subHeading.copyWith(
-                                    fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
-                                    overflow: TextOverflow.ellipsis
-                                  ),
-                                ),
+            Center(
+              child: SizedBox(
+                width: screenWidth > 500 ? screenWidth * 0.6 : screenWidth * 0.8,
+                child: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  runSpacing: 10,
+                  spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
+                  children: [
+                    for(var tag in noteTagData) ...[
+                      InkWell(
+                        onTap: () {
+                          widget.searchTag(tag['id']);
+                        },
+                        child: SizedBox(
+                          // height: 36,
+                          width: 150,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: SmoothBorderRadius(
+                                cornerRadius: 5,
+                                cornerSmoothing: 1,
                               ),
-                              Flexible(
-                                child: Text(
-                                  tag['note_count'].toString(),
-                                  style: NotakoTypography.subHeading.copyWith(
-                                    fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
-                                    overflow: TextOverflow.ellipsis
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tag['tag_name'],
+                                    style: NotakoTypography.subHeading.copyWith(
+                                      fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
+                                      overflow: TextOverflow.ellipsis
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        )
-                      ),
-                    )
-                  ]
-                ],
-              )
+                                Flexible(
+                                  child: Text(
+                                    tag['note_count'].toString(),
+                                    style: NotakoTypography.subHeading.copyWith(
+                                      fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
+                                      overflow: TextOverflow.ellipsis
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ),
+                      )
+                    ]
+                  ],
+                ),
+              ),
             )
           ],
         ),

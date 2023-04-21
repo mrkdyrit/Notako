@@ -7,72 +7,25 @@ import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 
-
-class NoteScreen extends StatefulWidget {
-  const NoteScreen({super.key});
+class TrashScreen extends StatefulWidget {
+  const TrashScreen({super.key});
 
   @override
-  State<NoteScreen> createState() => _NoteScreenState();
+  State<TrashScreen> createState() => _TrashScreenState();
 }
 
-class _NoteScreenState extends State<NoteScreen> {
+class _TrashScreenState extends State<TrashScreen> {
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
   final searchFormKey = GlobalKey<FormState>();
-
-  bool enableMultiSelectMode = false;
-
-  void enableSelectMode() {
-    setState(() {
-      enableMultiSelectMode = !enableMultiSelectMode;
-    });
-  }
 
   List<String> selection = [];
   
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
-    List<Map<String, dynamic>> notes = NotesData().getNotes();
     
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if(enableMultiSelectMode) {
-            if(selection.isNotEmpty) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return notakoAlertDialog(
-                    titleText: 'Confirm Delete', 
-                    titleIcon: Icons.delete,
-                    alertDescription: 'Are you sure you want to delete ${selection.length} notes?',
-                    context: context,
-                    children: [],
-                    onSubmit: () {
-                      setState(() {
-                        selection.clear();
-                        enableMultiSelectMode = false;
-                      });
-                    }
-                  );
-                },
-              );
-            } else {
-              setState(() {
-                enableMultiSelectMode = false;
-              });
-            }
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CreateNoteScreen()),
-            );
-          }
-        },
-        child: enableMultiSelectMode ? const Icon(Icons.delete) : const Icon(Icons.add),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
@@ -121,7 +74,7 @@ class _NoteScreenState extends State<NoteScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
-                'My Notes',
+                'Trash',
                 style: NotakoTypography.heading.copyWith(
                   fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
                 ),
@@ -133,23 +86,7 @@ class _NoteScreenState extends State<NoteScreen> {
                   alignment: WrapAlignment.start,
                   runSpacing: 8.0,
                   spacing: 5,
-                children: [
-                    if(notes.isNotEmpty) ...[
-                      for(var note in notes) ...[
-                        NoteCard(
-                          selection: selection,
-                          enableEditMode: enableSelectMode, 
-                          noteId: note['id'],
-                          noteLabel: note['title'], 
-                          noteContent: note['content'], 
-                          noteTags: note['tags'], 
-                          editMode: enableMultiSelectMode, 
-                          createdDate: note['date_created'],
-                          isLocked: note['is_locked'],
-                        ),
-                      ]
-                    ]
-                  ],
+                  children: [],
                 ),
               ),
             )

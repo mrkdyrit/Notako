@@ -7,6 +7,7 @@ import 'package:notako_app/screens/help/help.dart';
 import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/screens/settings/settings.dart';
 import 'package:notako_app/screens/tags/tags.dart';
+import 'package:notako_app/screens/trash/trash.dart';
 import 'package:notako_app/widgets/notako_appbar.dart';
 import 'package:notako_app/widgets/notako_drawer.dart';
 
@@ -80,13 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
           'screen': const SettingScreen(),
         },
       },
-      // {
-      //   'name': 'Help',
-      //   'details':  {
-      //     'icon': Icons.question_mark,
-      //     'screen': const HelpScreen(),
-      //   },
-      // },
+      {
+        'name': 'Trash',
+        'details':  {
+          'icon': Icons.delete,
+          'screen': const TrashScreen(),
+        },
+      },
     ];
 
     return Scaffold(

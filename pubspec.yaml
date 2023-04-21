@@ -15,6 +15,7 @@ dependencies:
   image_picker: 
   shared_preferences:
   figma_squircle:
+  flutter_multi_select_items:
 
 dev_dependencies:
   flutter_test:

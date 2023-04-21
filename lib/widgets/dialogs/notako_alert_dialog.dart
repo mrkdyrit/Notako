@@ -6,7 +6,7 @@ import 'package:notako_app/utils/colors.dart' as notako_color;
 AlertDialog notakoAlertDialog({
   required String titleText,
   required String alertDescription,
-  required IconData titleIcon,
+  required IconData? titleIcon,
   required BuildContext context,
   required List<Widget> children,
   Function? onSubmit,
@@ -50,8 +50,8 @@ AlertDialog notakoAlertDialog({
     actions: [
       TextButton(
         onPressed: () {
-          onCancel?.call();
           Navigator.of(context).pop();
+          onCancel?.call();
         }, 
         child: Text(
           'Cancel',
@@ -62,8 +62,8 @@ AlertDialog notakoAlertDialog({
       ),
       TextButton(
         onPressed: () {
-          onSubmit?.call();
           Navigator.of(context).pop();
+          onSubmit?.call();
         }, 
         child: Text(
           'Ok',
