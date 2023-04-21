@@ -1,3 +1,4 @@
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/utils/color_config.dart';
 import 'package:notako_app/utils/font_typography.dart';
@@ -15,8 +16,11 @@ AlertDialog notakoAlertDialog({
   return AlertDialog(
     contentPadding: const EdgeInsets.only(left: 15.0, right: 15.0),
     titlePadding: const EdgeInsets.only(bottom: 15.0, top:  15.0),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+    shape: RoundedRectangleBorder(
+      borderRadius: SmoothBorderRadius(
+        cornerRadius: 15,
+        cornerSmoothing: 1,
+      ),
     ),
     title: Center(
       child: Column(

@@ -129,11 +129,12 @@ class _NoteScreenState extends State<NoteScreen> {
             ),
             Center(
               child: SizedBox(
+                // width: screenWidth,
                 child: Wrap(
                   alignment: WrapAlignment.start,
                   runSpacing: 8.0,
                   spacing: 5,
-                children: [
+                  children: [
                     if(notes.isNotEmpty) ...[
                       for(var note in notes) ...[
                         NoteCard(

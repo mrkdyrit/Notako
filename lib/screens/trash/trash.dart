@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notako_app/data/notes_data.dart';
 import 'package:notako_app/screens/notes/create_note.dart';
 import 'package:notako_app/screens/notes/note_card.dart';
+import 'package:notako_app/screens/trash/restore_note_card.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
@@ -86,7 +87,16 @@ class _TrashScreenState extends State<TrashScreen> {
                   alignment: WrapAlignment.start,
                   runSpacing: 8.0,
                   spacing: 5,
-                  children: [],
+                  children: const [
+                    RestoreNoteCard(
+                      noteId: 'trash_1',
+                      isLocked: true,
+                      createdDate: 'Kahapon Lang',
+                      noteContent: 'Medyo May Content',
+                      noteLabel: 'Sample Trash',
+                      noteTags: [],
+                    ),
+                  ],
                 ),
               ),
             )
