@@ -21,4 +21,7 @@ class Assets {
 
   static const String helpSampleImageAttachment = "${helpImagesPath}help_sample_image_attachment.png";
   static const String helpEmptyNoteIndicator = "${helpImagesPath}help_empty_note_indicator.png";
+
+  // No Note Indicator
+  static const String noNoteIndicator = "${imagePath}empty_note_indictor.png";
 }

@@ -26,25 +26,25 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: lib/assets/images/logo/png/notako_logo_with_text.png
+  image: lib/assets/images/logo/png/notako_logo_only.png
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "lib/assets/images/logo/png/notako_logo_with_text.png"
+  image_path: "lib/assets/images/logo/png/notako_logo_only.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "lib/assets/images/logo/png/notako_logo_with_text.png"
+    image_path: "lib/assets/images/logo/png/notako_logo_only.png"
     background_color: "#ffffff"
     theme_color: "#ffffff"
   windows:
     generate: true
-    image_path: "lib/assets/images/logo/png/notako_logo_with_text.png"
+    image_path: "lib/assets/images/logo/png/notako_logo_only.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "lib/assets/images/logo/png/notako_logo_with_text.png"
+    image_path: "lib/assets/images/logo/png/notako_logo_only.png"
 
 flutter:
   uses-material-design: true
@@ -52,6 +52,7 @@ flutter:
     - lib/assets/images/logo/svg/
     - lib/assets/images/logo/png/
     - lib/assets/images/help/
+    - lib/assets/images/
     - lib/assets/fonts/
   fonts:
     - family: DM-Sans
