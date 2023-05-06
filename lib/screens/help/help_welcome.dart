@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/widgets/help/help_screen_template.dart';
 import 'package:notako_app/widgets/help/images/help_welcome_image_builder.dart';

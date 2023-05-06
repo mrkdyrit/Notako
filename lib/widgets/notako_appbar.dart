@@ -26,5 +26,5 @@ class NotakoAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
   
   @override
-  Size get preferredSize => AppBar().preferredSize;
+  Size get preferredSize =>   AppBar().preferredSize;
 }

@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '243744048794',
     projectId: 'notako-bed89',
     authDomain: 'notako-bed89.firebaseapp.com',
+    databaseURL: 'https://notako-bed89-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'notako-bed89.appspot.com',
     measurementId: 'G-2HP5EKLSB3',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:243744048794:android:49fa0d0f390f1372c78123',
     messagingSenderId: '243744048794',
     projectId: 'notako-bed89',
+    databaseURL: 'https://notako-bed89-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'notako-bed89.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:243744048794:ios:a652b3879f08c919c78123',
     messagingSenderId: '243744048794',
     projectId: 'notako-bed89',
+    databaseURL: 'https://notako-bed89-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'notako-bed89.appspot.com',
     iosClientId: '243744048794-fa9vo2mvtbf8jhfljkld25mbufbgiota.apps.googleusercontent.com',
     iosBundleId: 'com.example.notakoApp',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:243744048794:ios:a652b3879f08c919c78123',
     messagingSenderId: '243744048794',
     projectId: 'notako-bed89',
+    databaseURL: 'https://notako-bed89-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'notako-bed89.appspot.com',
     iosClientId: '243744048794-fa9vo2mvtbf8jhfljkld25mbufbgiota.apps.googleusercontent.com',
     iosBundleId: 'com.example.notakoApp',
