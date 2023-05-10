@@ -4,6 +4,7 @@ import 'package:notako_app/screens/notes/view_note.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field_password.dart';
 
 class NoteCard extends StatefulWidget {
   final Function() enableEditMode;
@@ -70,6 +71,7 @@ class _NoteCardState extends State<NoteCard> {
                     )
                   )
                 );
+                
                 passwordController.clear();
               },
               children: [
@@ -77,35 +79,15 @@ class _NoteCardState extends State<NoteCard> {
                   // key: passwordFormKey,
                   child: Column(
                     children: [
-                      TextFormField(
+                      NotakoTextFormFieldPassword(
                         validator: (value) {
-                          if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
-                            return '• Passwords must be alphanumeric. \n• Passwords must be 8 characters long. \n• Password must contain at least one uppercase letter.';
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password.';
                           }
 
                           return null;
                         },
-                        controller: passwordController,
-                        onTapOutside: (event) {
-                          setState(() {
-                            _isHidden = true;
-                          });
-                        },
-                        obscureText: _isHidden,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.greyColor,),
-                          suffixIcon: IconButton(
-                            icon: _isHidden ? _passIconShow: _passIconHide, 
-                            onPressed: () { 
-                              setState(() {
-                                _isHidden ? _isHidden = false: _isHidden = true;
-                              });
-                            },
-                          ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                        ),
+                        textFieldController: passwordController,
                       ),
                     ],
                   ),
@@ -162,6 +144,10 @@ class _NoteCardState extends State<NoteCard> {
       },
       onLongPress: () {
         widget.enableEditMode();
+        setState(() {
+          isSelected = true;
+          widget.selection.add(widget.noteId);
+        });
       },
       child: Container(
         padding: const EdgeInsets.all(12),

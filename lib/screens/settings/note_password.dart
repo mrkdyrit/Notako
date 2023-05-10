@@ -3,6 +3,8 @@ import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotePasswordScreen extends StatefulWidget {
@@ -145,7 +147,8 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                                 // key: passwordFormKey,
                                 child: Column(
                                   children: [
-                                    TextFormField(
+                                    NotakoTextFormFieldPassword(
+                                      textFieldController: passwordController,
                                       validator: (value) {
                                         if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
                                           return '• Passwords must be alphanumeric. \n• Passwords must be 8 characters long. \n• Password must contain at least one uppercase letter.';
@@ -153,31 +156,12 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
 
                                         return null;
                                       },
-                                      controller: passwordController,
-                                      onTapOutside: (event) {
-                                        setState(() {
-                                          _isHidden = true;
-                                        });
-                                      },
-                                      obscureText: _isHidden,
-                                      enableSuggestions: false,
-                                      autocorrect: false,
-                                      decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.greyColor,),
-                                        suffixIcon: IconButton(
-                                          icon: _isHidden ? _passIconShow: _passIconHide, 
-                                          onPressed: () { 
-                                            setState(() {
-                                              _isHidden ? _isHidden = false: _isHidden = true;
-                                            });
-                                          },
-                                        ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                      ),
+                                      hintText: 'Password',
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 15),
-                                      child: TextFormField(
+                                      child: NotakoTextFormFieldPassword(
+                                        textFieldController: passwordConfirmationController,
                                         validator: (value) {
                                           if(passwordController.text.trim() != value || value == null || value.isEmpty) {
                                             return 'Passwords does not match';
@@ -185,27 +169,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
 
                                           return null;
                                         },
-                                        controller: passwordConfirmationController,
-                                        onTapOutside: (event) {
-                                          setState(() {
-                                            _isHidden = true;
-                                          });
-                                        },
-                                        obscureText: _isHidden,
-                                        enableSuggestions: false,
-                                        autocorrect: false,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.greyColor,),
-                                          suffixIcon: IconButton(
-                                            icon: _isHidden ? _passIconShow: _passIconHide, 
-                                            onPressed: () { 
-                                              setState(() {
-                                                _isHidden ? _isHidden = false: _isHidden = true;
-                                              });
-                                            },
-                                          ),
-                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                        ),
+                                        hintText: 'Confirm Password',
                                       ),
                                     )
                                   ],

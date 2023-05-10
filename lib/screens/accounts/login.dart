@@ -7,6 +7,8 @@ import 'package:notako_app/screens/home/home.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field_password.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,10 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isHidden = true;
-  final Icon _passIconShow = const Icon(Icons.visibility, color: notako_color.Colors.greyColor,);
-  final Icon _passIconHide = const Icon(Icons.visibility_off, color: notako_color.Colors.greyColor,);
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -27,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginFormKey = GlobalKey<FormState>();
 
   final GlobalKey<NavigatorState> loginScaffoldKey = GlobalKey();
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,18 +79,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10, right: 10), 
-                                  child: TextFormField(
+                                  child: NotakoTextFormField(
+                                    textFieldController: emailController,
+                                    prefixIcon: Icons.email,
+                                    prefixIconColor: notako_color.Colors.secondaryColor,
                                     validator: (value) {
                                       if (value == null || value.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                                         return 'Invalid Email';
                                       }
+                                      
                                       return null;
                                     },
-                                    controller: emailController,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(Icons.email, color: notako_color.Colors.secondaryColor,),
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -107,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20), 
-                                  child: TextFormField(
+                                  child: NotakoTextFormFieldPassword(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your password.';
@@ -115,27 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                       return null;
                                     },
-                                    controller: passwordController,
-                                    onTapOutside: (event) {
-                                      setState(() {
-                                        _isHidden = true;
-                                      });
-                                    },
-                                    obscureText: _isHidden,
-                                    enableSuggestions: false,
-                                    autocorrect: false,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
-                                      suffixIcon: IconButton(
-                                        icon: _isHidden ? _passIconShow: _passIconHide, 
-                                        onPressed: () { 
-                                          setState(() {
-                                            _isHidden ? _isHidden = false: _isHidden = true;
-                                          });
-                                        },
-                                      ),
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                    ),
+                                    prefixIconColor: notako_color.Colors.secondaryColor,
+                                    textFieldController: passwordController,
                                   ),
                                 ),
                                 Padding(
@@ -148,7 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     onPressed: () async { 
                                       if(_loginFormKey.currentState!.validate()) {
-
                                         try {
                                           await FirebaseAuth.instance.signInWithEmailAndPassword(
                                             email: emailController.text.trim(),
@@ -159,7 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 context,
                                                 MaterialPageRoute(builder: (context) => const HomeScreen()),
                                               ),
-                                              // Navigator.pop(context),
                                             }
                                           });
 

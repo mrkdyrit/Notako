@@ -4,11 +4,11 @@ import 'package:notako_app/assets/assets.dart';
 import 'package:notako_app/screens/accounts/login.dart';
 import 'package:notako_app/screens/home/home.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
-import 'package:notako_app/utils/font_typography.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
-
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field.dart';
+import 'package:notako_app/widgets/forms/textfields/notako_text_form_field_password.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,11 +18,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
-  bool _isHidden = true;
-  final Icon _passIconShow = const Icon(Icons.visibility, color: notako_color.Colors.greyColor,);
-  final Icon _passIconHide = const Icon(Icons.visibility_off, color: notako_color.Colors.greyColor,);
-
   // TextField Controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -83,18 +78,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10), 
-                                child: TextFormField(
+                                child: NotakoTextFormField(
+                                  textFieldController: emailController,
+                                  prefixIcon: Icons.email,
+                                  prefixIconColor: notako_color.Colors.secondaryColor,
                                   validator: (value) {
                                     if (value == null || value.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                                       return 'Invalid Email';
                                     }
+                                    
                                     return null;
                                   },
-                                  controller: emailController,
-                                  decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.email, color: notako_color.Colors.secondaryColor,),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                  ),
                                 ),
                               ),
                               Padding(
@@ -108,35 +102,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10,), 
-                                child: TextFormField(
+                                child: NotakoTextFormFieldPassword(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
-                                      return '• Passwords must be alphanumeric. \n• Passwords must be 8 characters long. \n• Password must contain at least one uppercase letter.';
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your password.';
                                     }
 
                                     return null;
                                   },
-                                  controller: passwordController,
-                                  onTapOutside: (event) {
-                                    setState(() {
-                                      _isHidden = true;
-                                    });
-                                  },
-                                  obscureText: _isHidden,
-                                  enableSuggestions: false,
-                                  autocorrect: false,
-                                  decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
-                                    suffixIcon: IconButton(
-                                      icon: _isHidden ? _passIconShow: _passIconHide, 
-                                      onPressed: () { 
-                                        setState(() {
-                                          _isHidden ? _isHidden = false: _isHidden = true;
-                                        });
-                                      },
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                  ),
+                                  prefixIconColor: notako_color.Colors.secondaryColor,
+                                  textFieldController: passwordController,
                                 ),
                               ),
                               Padding(
@@ -150,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20), 
-                                child: TextFormField(
+                                child: NotakoTextFormFieldPassword(
                                   validator: (value) {
                                     if(passwordController.text.trim() != value || value == null || value.isEmpty) {
                                       return 'Passwords does not match';
@@ -158,27 +133,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                     return null;
                                   },
-                                  controller: passwordConfirmationController,
-                                  onTapOutside: (event) {
-                                    setState(() {
-                                      _isHidden = true;
-                                    });
-                                  },
-                                  obscureText: _isHidden,
-                                  enableSuggestions: false,
-                                  autocorrect: false,
-                                  decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.lock, color: notako_color.Colors.secondaryColor,),
-                                    suffixIcon: IconButton(
-                                      icon: _isHidden ? _passIconShow: _passIconHide, 
-                                      onPressed: () { 
-                                        setState(() {
-                                          _isHidden ? _isHidden = false: _isHidden = true;
-                                        });
-                                      },
-                                    ),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                                  ),
+                                  prefixIconColor: notako_color.Colors.secondaryColor,
+                                  textFieldController: passwordConfirmationController,
                                 ),
                               ),
                               Padding(

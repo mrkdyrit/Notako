@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notako_app/data/note_tags_data.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:notako_app/widgets/notako_search_bar.dart';
 
 class NoteTagsHome extends StatefulWidget {
   final Function(String) searchTag;
@@ -16,64 +17,22 @@ class NoteTagsHome extends StatefulWidget {
 }
 
 class _NoteTagsHomeState extends State<NoteTagsHome> {
-  final searchController = TextEditingController();
-  final searchFocusNode = FocusNode();
-
-  final searchFormKey = GlobalKey<FormState>();
-
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     // Get all tags
     List noteTagData = NoteTagsData().getNoteTagsData();
-
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            SizedBox(
-              width: screenWidth > 500 ? screenWidth * 0.7 : screenWidth * 0.9,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: SmoothBorderRadius(
-                    cornerRadius: 5,
-                    cornerSmoothing: 1,
-                  ),
-                ),
-                child: Form(
-                  key: searchFormKey,
-                  child: TextFormField(
-                    focusNode: searchFocusNode,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please type something.';
-                      }
-                      return null;
-                    },
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.search, color: notako_color.Colors.greyColor,),
-                        onPressed: () {
-                          // if(searchFormKey.currentState!.validate()) {
-
-                          // }
-
-                          searchFocusNode.unfocus();
-                          searchController.clear();
-                        },
-                      ),
-                      border: InputBorder.none,
-                      hintText: 'Search Tags...',
-                    ),
-                  ),
-                ),
-              )
+            NotakoSearchBar(
+              textEditingController: searchController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),

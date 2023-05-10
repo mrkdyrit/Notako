@@ -7,6 +7,7 @@ import 'package:notako_app/screens/trash/restore_note_card.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
+import 'package:notako_app/widgets/notako_search_bar.dart';
 
 class TrashScreen extends StatefulWidget {
   const TrashScreen({super.key});
@@ -17,8 +18,6 @@ class TrashScreen extends StatefulWidget {
 
 class _TrashScreenState extends State<TrashScreen> {
   final searchController = TextEditingController();
-  final searchFocusNode = FocusNode();
-  final searchFormKey = GlobalKey<FormState>();
 
   List<String> selection = [];
   
@@ -31,46 +30,8 @@ class _TrashScreenState extends State<TrashScreen> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            SizedBox(
-              width: screenWidth > 500 ? screenWidth * 0.7 : screenWidth * 0.9,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: SmoothBorderRadius(
-                    cornerRadius: 5,
-                    cornerSmoothing: 1,
-                  ),
-                ),
-                child: Form(
-                  key: searchFormKey,
-                  child: TextFormField(
-                    focusNode: searchFocusNode,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please type something.';
-                      }
-                      return null;
-                    },
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.search, color: notako_color.Colors.greyColor,),
-                        onPressed: () {
-                          // if(searchFormKey.currentState!.validate()) {
-
-                          // }
-
-                          searchFocusNode.unfocus();
-                          searchController.clear();
-                        },
-                      ),
-                      border: InputBorder.none,
-                      hintText: 'Search Tags...',
-                    ),
-                  ),
-                ),
-              )
+            NotakoSearchBar(
+              textEditingController: searchController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
