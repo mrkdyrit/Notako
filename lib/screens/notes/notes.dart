@@ -38,8 +38,6 @@ class _NoteScreenState extends State<NoteScreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    List<Map<String, dynamic>> notes = NotesData().getNotes();
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -56,6 +54,11 @@ class _NoteScreenState extends State<NoteScreen> {
                     children: [],
                     onSubmit: () {
                       setState(() {
+                        for(var id in selection) {
+                          // NotakoDBHelper().deleteNote(id);
+                          NotakoDBHelper().moveToTrash(id);
+                        }
+
                         selection.clear();
                         enableMultiSelectMode = false;
                       });
@@ -84,7 +87,7 @@ class _NoteScreenState extends State<NoteScreen> {
           builder: (context, snapshot) {
             if(snapshot.hasData && snapshot.data.snapshot.value != null) {
               Map<dynamic, dynamic> notesMap = snapshot.data!.snapshot.value;
-              List<dynamic> notesList = notesMap.values.toList();
+              // List<dynamic> notesList = notesMap.values.toList();
               return ListView(
                 children: [
                   NotakoSearchBar(
@@ -107,27 +110,27 @@ class _NoteScreenState extends State<NoteScreen> {
                         runSpacing: 8.0,
                         spacing: 5,
                         children: [
-                          for(var note in notesList) ...[
+                          for(var note in notesMap.entries) ...[
                             NoteCard(
                               selection: selection,
                               enableEditMode: enableSelectMode, 
-                              noteId: 'test',
-                              noteLabel: note['title'], 
-                              noteContent: note['content'], 
-                              noteTags: note['tags'], 
+                              noteId: note.key,
+                              noteLabel: note.value['title'], 
+                              noteContent: note.value['content'], 
+                              noteTags: note.value['tags'] ?? [], 
                               editMode: enableMultiSelectMode, 
-                              createdDate: note['date_created'],
-                              isLocked: note['is_locked'],
-                            ),
+                              createdDate: note.value['date_created'],
+                              isLocked: note.value['is_locked'],
+                            ),                            
                           ]
                         ],
                       ),
                     ),
                   )
-                ],
+                ]
               );
-              } else {
-                return Center(
+            } else {
+              return Center(
                 child: Wrap(
                   direction: Axis.vertical,
                   crossAxisAlignment: WrapCrossAlignment.center,

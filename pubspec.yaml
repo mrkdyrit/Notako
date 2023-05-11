@@ -17,6 +17,7 @@ dependencies:
   figma_squircle:
   flutter_multi_select_items:
   firebase_database: ^10.1.2
+  loading_indicator: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@ import 'package:notako_app/utils/colors.dart' as notako_color;
 class ViewOnlyNoteScreen extends StatefulWidget {
   final String noteLabel;
   final String noteContent;
-  final List<String> noteTags;
+  final List<String?>? noteTags;
   final Function() changeMode;
 
   const ViewOnlyNoteScreen({
@@ -73,36 +73,40 @@ class _ViewOnlyNoteScreenState extends State<ViewOnlyNoteScreen> {
                     spacing: 5,
                     runSpacing: 5,
                     children: [
-                      if(widget.noteTags.isNotEmpty) ...[
-                        for(var tag in widget.noteTags) ...[
-                          Container(
-                            padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: SmoothBorderRadius(
-                                cornerRadius: 15,
-                                cornerSmoothing: 1,
-                              ),
-                              color: Colors.blueAccent,
-                            ),
-                            child: Flex(
-                              mainAxisSize: MainAxisSize.min,
-                              direction: Axis.horizontal,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    tag,
-                                    style: NotakoTypography.bodyText.copyWith(
-                                      fontSize: NotakoTypography.calculateFontSize(screenWidth, 8),
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Colors.white
-                                    ),
+                      if(widget.noteTags != null) ...[
+                        if(widget.noteTags!.isNotEmpty) ...[
+                          for(var tag in widget.noteTags!) ...[
+                            if(tag != null) ...[
+                              Container(
+                                padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+                                decoration: BoxDecoration(
+                                  borderRadius: SmoothBorderRadius(
+                                    cornerRadius: 15,
+                                    cornerSmoothing: 1,
                                   ),
+                                  color: Colors.blueAccent,
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ]
+                                child: Flex(
+                                  mainAxisSize: MainAxisSize.min,
+                                  direction: Axis.horizontal,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        tag,
+                                        style: NotakoTypography.bodyText.copyWith(
+                                          fontSize: NotakoTypography.calculateFontSize(screenWidth, 8),
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.white
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ],
+                        ]
+                      ],
                     ],
                   ),
                 ),

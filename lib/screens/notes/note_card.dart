@@ -39,10 +39,6 @@ class _NoteCardState extends State<NoteCard> {
 
   final GlobalKey<NavigatorState> noteCardKey = GlobalKey();
 
-  bool _isHidden = true;
-  final Icon _passIconShow = const Icon(Icons.visibility, color: notako_color.Colors.greyColor,);
-  final Icon _passIconHide = const Icon(Icons.visibility_off, color: notako_color.Colors.greyColor,);
-
   final passwordController = TextEditingController();
 
   void askPassword(BuildContext context) {
@@ -64,10 +60,7 @@ class _NoteCardState extends State<NoteCard> {
                   context,
                   MaterialPageRoute(builder: (context) => 
                     ViewNoteScreen(
-                      noteLabel: widget.noteLabel,
-                      noteContent: widget.noteContent,
-                      isLocked: widget.isLocked,
-                      noteTags: [...widget.noteTags],
+                      noteId: widget.noteId,
                     )
                   )
                 );
@@ -120,10 +113,7 @@ class _NoteCardState extends State<NoteCard> {
             Navigator.of(noteCardKey.currentContext!).push(
               MaterialPageRoute(builder: (context) => 
                 ViewNoteScreen(
-                  noteLabel: widget.noteLabel,
-                  noteContent: widget.noteContent,
-                  isLocked: widget.isLocked,
-                  noteTags: [...widget.noteTags],
+                  noteId: widget.noteId,
                 )
               )
             );

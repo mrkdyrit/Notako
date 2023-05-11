@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notako_app/screens/notes/dialogs/image_attachments_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_locked_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_tags_dialog.dart';
+import 'package:notako_app/screens/notes/view_note.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/font_typography.dart';
@@ -44,15 +45,20 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () async {
-              if(_createNoteForm.currentState!.validate()) {
-                await NotakoDBHelper().createNote(noteTitleController.text, noteContentController.text, ["noteTags"]).then((value) {
-                  SnackBarUtil.showSnackBar(context, value ? 'Note Saved.' : 'Failed to save note.');
-                  if(value) {
-                    noteTitleController.text = '';
-                    noteContentController.text = '';
-                  }
-                });
+            onPressed: () {
+              String noteTitle = noteTitleController.text.isNotEmpty ? noteTitleController.text : 'Untitled Note';
+
+              String? noteId = NotakoDBHelper().createNote(noteTitle, noteContentController.text, []);
+
+              if(noteId != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => 
+                    ViewNoteScreen(
+                      noteId: noteId,
+                    )
+                  )
+                );
               }
 
               noteContentFocusNode.unfocus();

@@ -1,13 +1,15 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 
 class ViewNoteEditScreen extends StatefulWidget {
   final String noteLabel;
   final String noteContent;
-  final List<String> noteTags;
+  final List<String?>? noteTags;
   final Function() changeMode;
+  final String noteId;
 
   const ViewNoteEditScreen({
     super.key,
@@ -15,6 +17,7 @@ class ViewNoteEditScreen extends StatefulWidget {
     required this.noteContent,
     required this.noteTags,
     required this.changeMode,
+    required this.noteId,
   });
 
   @override
@@ -22,6 +25,13 @@ class ViewNoteEditScreen extends StatefulWidget {
 }
 
 class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
+  
+  TextEditingController noteTitleController = TextEditingController();
+  TextEditingController noteContentController = TextEditingController();
+
+  FocusNode noteTitleFocusNode = FocusNode();
+  FocusNode noteContentFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -41,6 +51,13 @@ class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              NotakoDBHelper().updateNote(
+                widget.noteId, 
+                noteTitleController.text.isEmpty ? 'Untitled Note' : noteTitleController.text, 
+                noteContentController.text,
+                [], 
+                false);
+
               widget.changeMode();
             }, 
             icon: const Icon(Icons.save)
@@ -68,7 +85,11 @@ class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
                     fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
                   ),
                   maxLines: 1,
-                  maxLength: 100,   
+                  maxLength: 100,
+                  controller: noteTitleController,
+                  onTapOutside: (event) {
+                    noteTitleFocusNode.unfocus();
+                  },
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -77,33 +98,37 @@ class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
                     spacing: 5,
                     runSpacing: 5,
                     children: [
-                      for(var tag in widget.noteTags) ...[
-                        Container(
-                          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: SmoothBorderRadius(
-                              cornerRadius: 15,
-                              cornerSmoothing: 1,
-                            ),
-                            color: Colors.blueAccent,
-                          ),
-                          child: Flex(
-                            mainAxisSize: MainAxisSize.min,
-                            direction: Axis.horizontal,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  tag,
-                                  style: NotakoTypography.bodyText.copyWith(
-                                    fontSize: NotakoTypography.calculateFontSize(screenWidth, 8),
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Colors.white
-                                  ),
+                      if(widget.noteTags != null) ...[
+                          for(var tag in widget.noteTags!) ...[
+                          if(tag != null) ...[
+                              Container(
+                              padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: SmoothBorderRadius(
+                                  cornerRadius: 15,
+                                  cornerSmoothing: 1,
                                 ),
+                                color: Colors.blueAccent,
                               ),
-                            ],
-                          ),
-                        ),
+                              child: Flex(
+                                mainAxisSize: MainAxisSize.min,
+                                direction: Axis.horizontal,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      tag,
+                                      style: NotakoTypography.bodyText.copyWith(
+                                        fontSize: NotakoTypography.calculateFontSize(screenWidth, 8),
+                                        overflow: TextOverflow.ellipsis,
+                                        color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]
+                        ]
                       ],
                     ],
                   ),
@@ -121,6 +146,10 @@ class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
                     ),
                     hintMaxLines: 12
                   ),
+                  controller: noteContentController,
+                  onTapOutside: (event) {
+                    noteContentFocusNode.unfocus();
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
