@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:notako_app/screens/notes/dialogs/image_attachments_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_locked_dialog.dart';
 import 'package:notako_app/screens/notes/dialogs/note_tags_dialog.dart';
@@ -30,8 +33,18 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
 
   final _createNoteForm = GlobalKey<FormState>();
 
+  List<XFile> imageAttachments = [];
+
+  void addImageAttachment(List<XFile> pendingImages) {
+    setState(() {
+      imageAttachments.addAll(pendingImages);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: createNoteScaffoldKey,
       appBar: AppBar(
@@ -45,21 +58,21 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               String noteTitle = noteTitleController.text.isNotEmpty ? noteTitleController.text : 'Untitled Note';
 
-              String? noteId = NotakoDBHelper().createNote(noteTitle, noteContentController.text, []);
-
-              if(noteId != null) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => 
-                    ViewNoteScreen(
-                      noteId: noteId,
+              await NotakoDBHelper().createNote(noteTitle, noteContentController.text, [], imageAttachments).then((noteId) {
+                if(noteId != null) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => 
+                      ViewNoteScreen(
+                        noteId: noteId,
+                      )
                     )
-                  )
-                );
-              }
+                  );
+                }
+              });
 
               noteContentFocusNode.unfocus();
               noteTitleFocusNode.unfocus();
@@ -88,6 +101,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                         imageAttachmentDialog(
                           context: context, 
                           size: bottomSheetIconSize,
+                          attachImage: addImageAttachment,
                         ),
                         noteLockDialog(
                           context: context, 
@@ -152,13 +166,31 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                       hintMaxLines: 12
                     ),
                   ),
-                  Wrap(
-                    spacing: 8.0, // spacing between columns
-                    runSpacing: 4.0,
-                    children: [
-                      // Space for images
-                    ],
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Wrap(
+                      spacing: 8.0, // spacing between columns
+                      runSpacing: 8.0,
+                      children: [
+                        for(XFile image in imageAttachments) ...[
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: ClipRRect(
+                              borderRadius: SmoothBorderRadius(
+                                cornerRadius: 10,
+                                cornerSmoothing: 1,
+                              ),
+                              child: Image.file(
+                                fit: BoxFit.fill,
+                                File(image.path),
+                              ),
+                            ),
+                          ),
+                        ]
+                      ],
+                    ),
+                  )
                 ],
               ),
             )

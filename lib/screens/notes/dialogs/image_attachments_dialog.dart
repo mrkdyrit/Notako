@@ -10,6 +10,7 @@ import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 Widget imageAttachmentDialog({
   required BuildContext context,
   required Size size,
+  required Function(List<XFile>) attachImage,
 }) {
   List<XFile> pendingImages = []; // List of selected images but not yet added to note.
 
@@ -28,6 +29,7 @@ Widget imageAttachmentDialog({
                   titleIcon: Icons.photo, 
                   context: context,
                   onSubmit: () {
+                    attachImage(pendingImages);
                     pendingImages.clear();
                   },
                   onCancel: () {

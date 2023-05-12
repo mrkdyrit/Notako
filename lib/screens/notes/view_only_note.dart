@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
@@ -11,6 +13,7 @@ class ViewOnlyNoteScreen extends StatefulWidget {
   final String noteContent;
   final List<String?>? noteTags;
   final Function() changeMode;
+  final List<dynamic> images;
 
   const ViewOnlyNoteScreen({
     super.key,
@@ -18,6 +21,7 @@ class ViewOnlyNoteScreen extends StatefulWidget {
     required this.noteContent,
     required this.noteTags,
     required this.changeMode,
+    required this.images,
   });
 
   @override
@@ -119,16 +123,35 @@ class _ViewOnlyNoteScreenState extends State<ViewOnlyNoteScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Wrap(
-                    spacing: 8.0, // spacing between columns
-                    runSpacing: 4.0,
-                    children: [
-                      
-                    ],
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Wrap(
+                      spacing: 8.0, // spacing between columns
+                      runSpacing: 4.0,
+                      children: [
+                        if(widget.images.isNotEmpty) ...[
+                          for(File image in widget.images) ...[
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: SmoothBorderRadius(
+                                  cornerRadius: 10,
+                                  cornerSmoothing: 1,
+                                ),
+                                child: Image.file(
+                                  fit: BoxFit.fill,
+                                  File(image.path),
+                                ),
+                              ),
+                            ),
+                          ]
+                        ]
+                      ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           )

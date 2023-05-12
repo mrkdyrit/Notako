@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:path_provider/path_provider.dart';
 
 class ViewNoteScreen extends StatefulWidget {
   // final String noteLabel;
@@ -30,13 +33,32 @@ class ViewNoteScreen extends StatefulWidget {
 }
 
 class _ViewNoteScreenState extends State<ViewNoteScreen> {
-
   bool isEditMode = false;
 
   void enableEditMode() {
     setState(() {
       isEditMode = !isEditMode;
     });
+  }
+
+  var imageAttachments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getImages();
+  }
+
+  void getImages() async {
+    final appDir = await getApplicationDocumentsDirectory();
+
+    Directory noteImages = Directory('${appDir.path}/${widget.noteId}/images');
+
+    var images = noteImages.listSync().where((element) => element is File);
+
+    for(var image in images) {
+      imageAttachments.add(image);
+    }
   }
 
   @override
@@ -61,6 +83,7 @@ class _ViewNoteScreenState extends State<ViewNoteScreen> {
               noteContent: noteDetails['content'], 
               noteTags: noteDetails['tags'],
               changeMode: enableEditMode,
+              images: imageAttachments,
             );
           }
         } else {

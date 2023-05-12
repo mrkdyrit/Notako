@@ -1,12 +1,18 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NotakoDBHelper {
   String? getUserId = FirebaseAuth.instance.currentUser?.uid;
 
-  String? createNote(String noteTitle, String noteContent, List<String>? noteTags) {
+  Future<String?> createNote(String noteTitle, String noteContent, List<String>? noteTags, List<XFile> imageAttachments) async {
     DatabaseReference newNoteRef = FirebaseDatabase.instance.ref('notes/$getUserId').push();
 
     newNoteRef.set({
@@ -16,6 +22,34 @@ class NotakoDBHelper {
       'date_created': DateTime.now().toString(),
       'content': noteContent,
     });
+    
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    // if(connectivityResult != ConnectivityResult.none && imageAttachments.isNotEmpty) {
+      // for (var image in imageAttachments) {
+      //   final storageRef = FirebaseStorage.instance.ref('${newNoteRef.path}/images/${image.name}');
+      //   File imagePath = File(image.path);
+      //   storageRef.putFile(imagePath).storage.toString();
+      // }
+    // }
+
+    final appDir = await getApplicationDocumentsDirectory();
+
+    if(imageAttachments.isNotEmpty) {
+      for (var image in imageAttachments) {
+        if(connectivityResult != ConnectivityResult.none) {
+          final storageRef = FirebaseStorage.instance.ref('${newNoteRef.path}/images/${image.name}');
+          File imagePath = File(image.path);
+          storageRef.putFile(imagePath).storage.toString();
+        }
+
+        String imageFolder = '${appDir.path}/${newNoteRef.key}/images/';
+
+        await Directory(imageFolder).create(recursive: true);
+        
+        image.saveTo('$imageFolder/${image.name}');
+      }
+    }
 
     return newNoteRef.key;
   }
