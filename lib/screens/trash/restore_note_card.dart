@@ -1,6 +1,7 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/notes/view_note.dart';
+import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
@@ -43,6 +44,9 @@ class _RestoreNoteCardState extends State<RestoreNoteCard> {
               alertDescription: 'Are you sure you want to restore this note?',
               context: context,
               children: [],
+              onSubmit: () {
+                NotakoDBHelper().restoreTrash(widget.noteId);
+              }
             );
           },
         );

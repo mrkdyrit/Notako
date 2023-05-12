@@ -32,8 +32,8 @@ class NotakoDBHelper {
     });
   }
 
-  void deleteNote(String noteId) {
-    DatabaseReference deleteNoteRef = FirebaseDatabase.instance.ref('notes/$getUserId/$noteId');
+  void deleteNote(String noteId, String node) {
+    DatabaseReference deleteNoteRef = FirebaseDatabase.instance.ref('$node/$getUserId/$noteId');
 
     deleteNoteRef.remove();
   }
@@ -51,13 +51,35 @@ class NotakoDBHelper {
           'date_created': event.snapshot.value['date_created'],
         });
 
-        deleteNote(noteId);
+        deleteNote(noteId, 'notes');
+      }
+    });
+  }
+
+  void restoreTrash(String noteId) {
+    getTrashNoteDetails(noteId).listen((event) {
+      if(event.snapshot.value != null) {
+        DatabaseReference movedToTrashRef = FirebaseDatabase.instance.ref('notes/$getUserId').push();
+
+        movedToTrashRef.update({
+          'title': event.snapshot.value['title'],
+          'tags': event.snapshot.value['tags'] ?? [],
+          'is_locked': event.snapshot.value['is_locked'],
+          'content': event.snapshot.value['content'],
+          'date_created': event.snapshot.value['date_created'],
+        });
+
+        deleteNote(noteId, 'trash');
       }
     });
   }
 
   Stream getNoteDetails(String noteId) {
     return FirebaseDatabase.instance.ref('notes/$getUserId/').child(noteId).onValue;
+  }
+
+  Stream getTrashNoteDetails(String noteId) {
+    return FirebaseDatabase.instance.ref('trash/$getUserId/').child(noteId).onValue;
   }
 
   Stream getNotes() {

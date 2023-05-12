@@ -21,13 +21,43 @@ class TrashScreen extends StatefulWidget {
 class _TrashScreenState extends State<TrashScreen> {
   final searchController = TextEditingController();
 
-  List<String> selection = [];
-  
+  // List<String> selection = [];
+
+  bool trashIsNotEmpty = false;
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          NotakoDBHelper().getTrashNotes().listen((event) {
+            if(event.snapshot.value != null) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return notakoAlertDialog(
+                    titleText: 'Empty Trash', 
+                    titleIcon: Icons.delete,
+                    alertDescription: 'Are you sure you want to delete all note in the trash?',
+                    context: context,
+                    children: [],
+                    onSubmit: () {
+                      for(var note in event.snapshot.value.entries) {
+                        NotakoDBHelper().deleteNote(note.key, 'trash');
+                      }
+                    }
+                  );
+                },
+              );
+            }
+          });
+
+          ;
+        },
+        child: const Icon(Icons.delete),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: StreamBuilder(
@@ -95,7 +125,7 @@ class _TrashScreenState extends State<TrashScreen> {
                       ),
                     ),
                     Text(
-                      'Looks like you haven\'t deleted any notes yet.',
+                      'No trash here.',
                       style: NotakoTypography.mutedText.copyWith(
                         fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
                       ),
