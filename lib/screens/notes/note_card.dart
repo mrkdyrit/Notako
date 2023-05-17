@@ -97,8 +97,6 @@ class _NoteCardState extends State<NoteCard> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    print(widget.noteTags);
-
     if(widget.editMode == false) {
       setState(() {
         isSelected = false;

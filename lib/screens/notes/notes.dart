@@ -87,10 +87,7 @@ class _NoteScreenState extends State<NoteScreen> {
           builder: (context, snapshot) {
             if(snapshot.hasData && snapshot.data.snapshot.value != null) {
               Map<dynamic, dynamic> notesMap = snapshot.data!.snapshot.value;
-              // List<dynamic> notesList = notesMap.values.toList();
-
-              print(notesMap);
-
+              
               return ListView(
                 children: [
                   NotakoSearchBar(

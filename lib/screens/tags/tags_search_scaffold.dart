@@ -2,6 +2,8 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/data/note_tags_data.dart';
 import 'package:notako_app/screens/notes/create_note.dart';
+import 'package:notako_app/screens/notes/note_card.dart';
+import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/notako_search_bar.dart';
@@ -26,8 +28,6 @@ class NoteTagSearchState extends State<NoteTagSearch> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
-    Map<String, dynamic> noteTagDetails = NoteTagsData().getNoteTagsData().where((tag) => tag['id'] == widget.tagId).first;
 
     return WillPopScope(
       onWillPop: () async {
@@ -54,7 +54,7 @@ class NoteTagSearchState extends State<NoteTagSearch> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  '"${noteTagDetails["tag_name"]}" Notes',
+                  '"${widget.tagId}" Notes',
                   style: NotakoTypography.heading.copyWith(
                     fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
                   ),
@@ -62,13 +62,39 @@ class NoteTagSearchState extends State<NoteTagSearch> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Wrap(
-                  runSpacing: 10,
-                  spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
-                  children: const [
-
-                  ],
-                )
+                child: StreamBuilder(
+                  stream: NotakoDBHelper().getNotes(),
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData && snapshot.data.snapshot.value != null) {
+                      Map<dynamic, dynamic> notesMap = snapshot.data!.snapshot.value;
+                      List notesList = notesMap.values.toList();
+                      
+                      return Wrap(
+                        runSpacing: 10,
+                        spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
+                        children: [
+                          for(var note in notesMap.entries) ...[
+                            if(note.value['tags'].contains(widget.tagId)) ...[
+                              NoteCard(
+                                selection: const [],
+                                enableEditMode: () {}, 
+                                noteId: note.key,
+                                noteLabel: note.value['title'], 
+                                noteContent: note.value['content'], 
+                                noteTags: note.value['tags'] ?? [], 
+                                editMode: false, 
+                                createdDate: note.value['date_created'],
+                                isLocked: note.value['is_locked'],
+                              ),   
+                            ]
+                          ]
+                        ],
+                      );
+                    } else {
+                      return const Center(child: Text('Nothing found!'),);
+                    }
+                  },
+                ),
               )
             ],
           ),
