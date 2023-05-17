@@ -24,4 +24,6 @@ class Assets {
 
   // No Note Indicator
   static const String noNoteIndicator = "${imagePath}empty_note_indictor.png";
+
+  static const String noTrashIndicator = "${imagePath}empty_trash_indictor.png";
 }

@@ -21,9 +21,6 @@ dependencies:
   firebase_storage: ^11.2.0
   connectivity_plus: ^4.0.0
   path_provider: ^2.0.15
-  path:
-  path_provider_ex:
-  flutter_file_manager:
 
 dev_dependencies:
   flutter_test:

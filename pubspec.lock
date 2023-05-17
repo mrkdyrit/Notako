@@ -270,14 +270,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_file_manager:
-    dependency: "direct main"
-    description:
-      name: flutter_file_manager
-      sha256: "75beffaa3b69506cf74d66ba318361c3af549e23c9ecf73c5d1c6a505d9c46b8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -481,7 +473,7 @@ packages:
     source: hosted
     version: "0.5.0"
   path:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path
       sha256: db9d4f58c908a4ba5953fcee2ae317c94889433e5024c27ce74a37f94267945b
@@ -512,14 +504,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.27"
-  path_provider_ex:
-    dependency: "direct main"
-    description:
-      name: path_provider_ex
-      sha256: f55d5ae21136f50da0c266efb5b350ec6300396debb099c7952b25fd512e45ae
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   path_provider_foundation:
     dependency: transitive
     description:

@@ -112,7 +112,7 @@ class _TrashScreenState extends State<TrashScreen> {
                       height: 200,
                       width: 200,
                       child: Image(
-                        image: AssetImage(Assets.noNoteIndicator),
+                        image: AssetImage(Assets.noTrashIndicator),
                       ),
                     ),
                     Padding(
