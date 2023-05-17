@@ -41,11 +41,13 @@ class _TagsScreenState extends State<TagsScreen> {
       tagList.clear();
 
       for(var note in notesList) {
-        for(var tag in note['tags']) {
-          if(tagList.containsKey(tag)) {
-            tagList.update(tag, (value) => value += 1);
-          } else {
-            tagList.addEntries({tag: 1}.entries);
+        if(note['tags'] != null && note['tags'].length != 0) {
+          for(var tag in note['tags']) {
+            if(tagList.containsKey(tag)) {
+              tagList.update(tag, (value) => value += 1);
+            } else {
+              tagList.addEntries({tag: 1}.entries);
+            }
           }
         }
       }

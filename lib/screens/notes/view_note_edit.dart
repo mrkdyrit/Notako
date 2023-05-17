@@ -55,7 +55,6 @@ class ViewNoteEditScreenState extends State<ViewNoteEditScreen> {
                 widget.noteId, 
                 noteTitleController.text.isEmpty ? 'Untitled Note' : noteTitleController.text, 
                 noteContentController.text,
-                [], 
                 false);
 
               widget.changeMode();

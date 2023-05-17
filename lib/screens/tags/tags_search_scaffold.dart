@@ -74,7 +74,7 @@ class NoteTagSearchState extends State<NoteTagSearch> {
                         spacing: screenWidth > 500 ? 70 : screenWidth * 0.05,
                         children: [
                           for(var note in notesMap.entries) ...[
-                            if(note.value['tags'].contains(widget.tagId)) ...[
+                            if(note.value['tags'] != null && note.value['tags'].contains(widget.tagId)) ...[
                               NoteCard(
                                 selection: const [],
                                 enableEditMode: () {}, 

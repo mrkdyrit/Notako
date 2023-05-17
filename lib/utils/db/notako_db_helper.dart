@@ -54,12 +54,11 @@ class NotakoDBHelper {
     return newNoteRef.key;
   }
 
-  void updateNote(String noteId, String noteTitle, String noteContent, List<String>? noteTags, bool isLocked) {
+  void updateNote(String noteId, String noteTitle, String noteContent, bool isLocked) {
     DatabaseReference editNoteRef = FirebaseDatabase.instance.ref('notes/$getUserId/$noteId');
 
     editNoteRef.update({
       'title': noteTitle,
-      'tags': noteTags,
       'is_locked': isLocked,
       'content': noteContent,
       'date_created': DateTime.now().toString(),
