@@ -7,7 +7,7 @@ import 'package:notako_app/utils/colors.dart' as notako_color;
 class ViewNoteEditScreen extends StatefulWidget {
   final String noteLabel;
   final String noteContent;
-  final List<String?>? noteTags;
+  final List<dynamic>? noteTags;
   final Function() changeMode;
   final String noteId;
 

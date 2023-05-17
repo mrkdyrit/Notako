@@ -11,6 +11,7 @@ import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/snackbar_util.dart';
+import 'package:notako_app/utils/v2/font_typography.dart';
 
 
 class CreateNoteScreen extends StatefulWidget {
@@ -33,11 +34,19 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
 
   final _createNoteForm = GlobalKey<FormState>();
 
+  List<String> noteTags = [];
+
   List<XFile> imageAttachments = [];
 
   void addImageAttachment(List<XFile> pendingImages) {
     setState(() {
       imageAttachments.addAll(pendingImages);
+    });
+  }
+
+  void addTag(List<String> tags) {
+    setState(() {
+      noteTags.addAll(tags);
     });
   }
 
@@ -61,7 +70,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
             onPressed: () async {
               String noteTitle = noteTitleController.text.isNotEmpty ? noteTitleController.text : 'Untitled Note';
 
-              await NotakoDBHelper().createNote(noteTitle, noteContentController.text, [], imageAttachments).then((noteId) {
+              await NotakoDBHelper().createNote(noteTitle, noteContentController.text, noteTags, imageAttachments).then((noteId) {
                 if(noteId != null) {
                   Navigator.pushReplacement(
                     context,
@@ -97,6 +106,8 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                         noteTagsDialog(
                           context: context,
                           size: bottomSheetIconSize,
+                          addTag: addTag,
+                          tagList: noteTags,
                         ),
                         imageAttachmentDialog(
                           context: context, 
@@ -144,6 +155,44 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                     style: FontTypography.subHeading1,
                     maxLines: 1,
                     maxLength: 100,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 5,
+                      runSpacing: 5,
+                      children: [
+                        for(var tag in noteTags) ...[
+                          Container(
+                            padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+                            decoration: BoxDecoration(
+                              borderRadius: SmoothBorderRadius(
+                                cornerRadius: 15,
+                                cornerSmoothing: 1,
+                              ),
+                              color: Colors.blueAccent,
+                            ),
+                            child: Flex(
+                              mainAxisSize: MainAxisSize.min,
+                              direction: Axis.horizontal,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tag,
+                                    style: NotakoTypography.bodyText.copyWith(
+                                      fontSize: NotakoTypography.calculateFontSize(screenWidth, 8),
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Colors.white
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )      
+                        ]
+                      ],
+                    ),
                   ),
                   TextFormField(
                     focusNode: noteContentFocusNode,
