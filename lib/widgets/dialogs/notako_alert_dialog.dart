@@ -12,6 +12,7 @@ AlertDialog notakoAlertDialog({
   required List<Widget> children,
   Function? onSubmit,
   Function? onCancel,
+  bool autoClose = true,
 }) {
   return AlertDialog(
     contentPadding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -66,7 +67,10 @@ AlertDialog notakoAlertDialog({
       ),
       TextButton(
         onPressed: () {
-          Navigator.of(context).pop();
+          if(autoClose) {
+            Navigator.of(context).pop();
+          }
+          
           onSubmit?.call();
         }, 
         child: Text(

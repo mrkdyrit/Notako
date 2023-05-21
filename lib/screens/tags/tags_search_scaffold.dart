@@ -7,6 +7,7 @@ import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/notako_search_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NoteTagSearch extends StatefulWidget {
   final Function(String) goBack;
@@ -24,6 +25,19 @@ class NoteTagSearch extends StatefulWidget {
 
 class NoteTagSearchState extends State<NoteTagSearch> {
   TextEditingController searchController = TextEditingController();
+
+  String password = '';
+
+  @override
+  void initState()  {
+    super.initState();
+    
+    setState(() async {
+      final prefs = await SharedPreferences.getInstance();
+
+      password = prefs.getString('notePassword') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

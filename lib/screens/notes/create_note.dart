@@ -10,9 +10,7 @@ import 'package:notako_app/screens/notes/view_note.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/font_typography.dart';
-import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
-
 
 class CreateNoteScreen extends StatefulWidget {
   const CreateNoteScreen({super.key});
@@ -50,6 +48,14 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     });
   }
 
+  bool isLocked = false;
+
+  void lockNote() {
+    setState(() {
+      isLocked = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -70,7 +76,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
             onPressed: () async {
               String noteTitle = noteTitleController.text.isNotEmpty ? noteTitleController.text : 'Untitled Note';
 
-              await NotakoDBHelper().createNote(noteTitle, noteContentController.text, noteTags, imageAttachments).then((noteId) {
+              await NotakoDBHelper().createNote(noteTitle, noteContentController.text, noteTags, imageAttachments, isLocked).then((noteId) {
                 if(noteId != null) {
                   Navigator.pushReplacement(
                     context,
@@ -116,7 +122,8 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                         ),
                         noteLockDialog(
                           context: context, 
-                          createNoteScaffoldKey: createNoteScaffoldKey
+                          createNoteScaffoldKey: createNoteScaffoldKey,
+                          lockNote: lockNote,
                         ),
                       ],
                     ),

@@ -4,12 +4,15 @@ import 'package:notako_app/utils/snackbar_util.dart';
 
 Widget noteLockDialog({
   required BuildContext context,
-  required GlobalKey<NavigatorState> createNoteScaffoldKey
+  required GlobalKey<NavigatorState> createNoteScaffoldKey,
+  required Function() lockNote,
 }) {
   return SizedBox.fromSize(
     size: const Size(70,50),
     child: InkWell(
       onTap: () {
+        lockNote.call();
+
         Navigator.of(context).pop();
         SnackBarUtil.showSnackBar(
           createNoteScaffoldKey.currentContext!, 

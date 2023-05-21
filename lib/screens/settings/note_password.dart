@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/utils/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
+import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 import 'package:notako_app/widgets/forms/textfields/notako_text_form_field.dart';
@@ -23,6 +25,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
 
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
+  final notePasswordController = TextEditingController();
 
   List<String> passwordOptions = <String>['None', 'Password', 'PIN'];
 
@@ -33,11 +36,28 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
     prefs.setString('selectedPasswordOption', value);
   }
 
+  void savePassword(String password) async {
+    final SharedPreferences prefs =  await SharedPreferences.getInstance();
+    prefs.setString('notePassword', password);
+  }
+
   void getSelectedPasswordOption() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
       selectedPasswordOption = prefs.getString('selectedPasswordOption') ?? 'None';
+    });
+  }
+
+  String passwordText = 'Password is not set';
+
+  void checkIfPassIsSet() async {
+    final SharedPreferences prefs =  await SharedPreferences.getInstance();
+    
+    setState(() {
+      if(prefs.getString("notePassword") != null) {
+        passwordText = 'Password is set';
+      }
     });
   }
 
@@ -48,9 +68,75 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
     getSelectedPasswordOption();
   }
 
+  void askPassword(BuildContext context, String passwordType) {
+    showDialog(
+      context: context, 
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return notakoAlertDialog(
+              titleText: 'Confirm Password', 
+              alertDescription: 'Enter your password to view note.',
+              titleIcon: Icons.lock, 
+              context: context, 
+              onCancel: () {
+                notePasswordController.clear();
+              },
+              onSubmit: () async {
+                
+                final prefs = await SharedPreferences.getInstance();
+
+                if(notePasswordController.text != prefs.getString('notePassword')) {
+                  
+                }
+                
+                notePasswordController.clear();
+              },
+              children: [
+                Form(
+                  // key: passwordFormKey,
+                  child: Column(
+                    children: [
+                      NotakoTextFormFieldPassword(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password.';
+                          }
+
+                          return null;
+                        },
+                        textFieldController: notePasswordController,
+                      ),
+                    ],
+                  ),
+                ),
+              ]
+            );
+          }
+        );
+      }
+    );
+  }
+
+  dynamic controlSetPasswordType() {
+    if(passwordText != 'Password is set') {
+      return (String? value) {
+        setSelectedPasswordOption(value!);
+
+        setState(() {
+          selectedPasswordOption = value;
+        });
+      };
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    
+    checkIfPassIsSet();
 
     return Scaffold(
       appBar: AppBar(
@@ -76,6 +162,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
               padding: const EdgeInsets.only(left: 7, top: 15),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
+                  
                   isExpanded: true,
                   items: passwordOptions.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -83,14 +170,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (String? value) {
-                    
-                    setSelectedPasswordOption(value!);
-
-                    setState(() {
-                      selectedPasswordOption = value;
-                    });
-                  },
+                  onChanged: controlSetPasswordType(),
                   icon: const Icon(
                     Icons.expand_more, 
                     color: notako_color.Colors.secondaryColor,
@@ -134,17 +214,27 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                             alertDescription: 'Add or change the password used for note locking.',
                             titleIcon: Icons.lock, 
                             context: context, 
+                            autoClose: false,
                             onCancel: () {
                               passwordConfirmationController.clear();
                               passwordController.clear();
                             },
                             onSubmit: () {
-                              passwordConfirmationController.clear();
-                              passwordController.clear();
+                              if(passwordFormKey.currentState!.validate()) {
+                                NotakoDBHelper().setPassword(passwordController.text);
+
+                                passwordConfirmationController.clear();
+                                passwordController.clear();
+
+                                savePassword(passwordController.text);
+
+                                Navigator.of(context).pop();
+                                SnackBarUtil.showSnackBar(context, "Password Set");
+                              }
                             },
                             children: [
                               Form(
-                                // key: passwordFormKey,
+                                key: passwordFormKey,
                                 child: Column(
                                   children: [
                                     NotakoTextFormFieldPassword(
@@ -195,7 +285,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                           ),
                         ),
                         Text(
-                          'Password not set',
+                          passwordText,
                           style: NotakoTypography.mutedText.copyWith(
                             fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs6)
                           ),

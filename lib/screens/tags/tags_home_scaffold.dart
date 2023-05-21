@@ -29,6 +29,7 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
 
     // Get all tags
     List noteTagData = NoteTagsData().getNoteTagsData();
+    print(widget.tagList);
 
     return Scaffold(
       body: Padding(
@@ -39,81 +40,85 @@ class _NoteTagsHomeState extends State<NoteTagsHome> {
             if(snapshot.hasData && snapshot.data.snapshot.value != null) {
               Map<dynamic, dynamic> notesMap = snapshot.data!.snapshot.value;
 
-              return ListView(
-                children: [
-                  NotakoSearchBar(
-                    textEditingController: searchController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      'Note Tags',
-                      style: NotakoTypography.heading.copyWith(
-                        fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
+              if(widget.tagList.isNotEmpty) {
+                return ListView(
+                  children: [
+                    NotakoSearchBar(
+                      textEditingController: searchController,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Text(
+                        'Note Tags',
+                        style: NotakoTypography.heading.copyWith(
+                          fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5)
+                        ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: SizedBox(
-                      width: screenWidth > 500 ? screenWidth * 0.6 : screenWidth * 0.8,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runSpacing: 10,
-                        spacing: 10,
-                        children: [
-                          for(var tag in widget.tagList.entries) ...[
-                            InkWell(
-                              onTap: () {
-                                widget.searchTag(tag.key);
-                              },
-                              child: SizedBox(
-                                // height: 36,
-                                width: 140,
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: SmoothBorderRadius(
-                                      cornerRadius: 5,
-                                      cornerSmoothing: 1,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          tag.key,
-                                          style: NotakoTypography.subHeading.copyWith(
-                                            fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
-                                            overflow: TextOverflow.ellipsis
-                                          ),
-                                        ),
+                    Center(
+                      child: SizedBox(
+                        width: screenWidth > 500 ? screenWidth * 0.6 : screenWidth * 0.8,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: [
+                            for(var tag in widget.tagList.entries) ...[
+                              InkWell(
+                                onTap: () {
+                                  widget.searchTag(tag.key);
+                                },
+                                child: SizedBox(
+                                  // height: 36,
+                                  width: 140,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: SmoothBorderRadius(
+                                        cornerRadius: 5,
+                                        cornerSmoothing: 1,
                                       ),
-                                      Flexible(
-                                        child: Text(
-                                          textAlign: TextAlign.end,
-                                          tag.value.toString(),
-                                          style: NotakoTypography.subHeading.copyWith(
-                                            fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
-                                            overflow: TextOverflow.ellipsis
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            tag.key,
+                                            style: NotakoTypography.subHeading.copyWith(
+                                              fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
+                                              overflow: TextOverflow.ellipsis
+                                            ),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ),
-                            )
-                          ]
-                        ],
+                                        Flexible(
+                                          child: Text(
+                                            textAlign: TextAlign.end,
+                                            tag.value.toString(),
+                                            style: NotakoTypography.subHeading.copyWith(
+                                              fontSize: NotakoTypography.calculateFontSize(screenWidth, NotakoTypography.fs5),
+                                              overflow: TextOverflow.ellipsis
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ),
+                              )
+                            ]
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              );
+                    )
+                  ],
+                );
+              } else {
+                return const Center(child: Text('No Tags Yet'));
+              }
             } else {
-              return const Center(child: Text('No Tags Yet'));
+              return const Center(child: Text('No Notes Yet'));
             }
           },
         ),

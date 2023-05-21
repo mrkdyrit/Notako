@@ -8,6 +8,7 @@ import 'package:notako_app/screens/notes/notes.dart';
 import 'package:notako_app/screens/settings/settings.dart';
 import 'package:notako_app/screens/tags/tags.dart';
 import 'package:notako_app/screens/trash/trash.dart';
+import 'package:notako_app/utils/db/notako_db_helper.dart';
 import 'package:notako_app/widgets/notako_appbar.dart';
 import 'package:notako_app/widgets/notako_drawer.dart';
 
@@ -59,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    NotakoDBHelper().getPassword();
+
     final List<Map<String, dynamic>> screenList = [
       {
         'name': 'My Notes',

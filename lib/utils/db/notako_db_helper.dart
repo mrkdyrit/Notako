@@ -8,21 +8,22 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotakoDBHelper {
   String? getUserId = FirebaseAuth.instance.currentUser?.uid;
 
-  Future<String?> createNote(String noteTitle, String noteContent, List<String>? noteTags, List<XFile> imageAttachments) async {
+  Future<String?> createNote(String noteTitle, String noteContent, List<String>? noteTags, List<XFile> imageAttachments, bool isLocked) async {
     DatabaseReference newNoteRef = FirebaseDatabase.instance.ref('notes/$getUserId').push();
 
     newNoteRef.set({
       'title': noteTitle,
       'tags': noteTags,
-      'is_locked': false,
+      'is_locked': isLocked,
       'date_created': DateTime.now().toString(),
       'content': noteContent,
     });
-    
+
     final connectivityResult = await Connectivity().checkConnectivity();
 
     // if(connectivityResult != ConnectivityResult.none && imageAttachments.isNotEmpty) {
@@ -104,6 +105,34 @@ class NotakoDBHelper {
 
         deleteNote(noteId, 'trash');
       }
+    });
+  }
+
+  void getPassword() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('passwords/$getUserId').get();
+    if (snapshot.exists) {
+      String password = snapshot.value.toString();
+      RegExp pattern = RegExp(r'\{note_password:\s*(.*?)\}');
+      Match? match = pattern.firstMatch(password);
+
+      if (match != null) {
+        String notePassword = match.group(1)!;
+        prefs.setString('notePassword', notePassword);
+      }
+
+    } else {
+      print('No data available.');
+    }
+  }
+
+  void setPassword(String password) {
+    DatabaseReference passwordRef = FirebaseDatabase.instance.ref('passwords/$getUserId');
+
+    passwordRef.update({
+      'note_password': password
     });
   }
 

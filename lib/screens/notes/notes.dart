@@ -11,6 +11,7 @@ import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 import 'package:notako_app/widgets/notako_search_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class NoteScreen extends StatefulWidget {

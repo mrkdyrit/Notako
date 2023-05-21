@@ -1,10 +1,12 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:notako_app/screens/notes/view_note.dart';
+import 'package:notako_app/utils/snackbar_util.dart';
 import 'package:notako_app/utils/v2/font_typography.dart';
 import 'package:notako_app/utils/colors.dart' as notako_color;
 import 'package:notako_app/widgets/dialogs/notako_alert_dialog.dart';
 import 'package:notako_app/widgets/forms/textfields/notako_text_form_field_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NoteCard extends StatefulWidget {
   final Function() enableEditMode;
@@ -56,16 +58,19 @@ class _NoteCardState extends State<NoteCard> {
                 passwordController.clear();
               },
               onSubmit: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => 
-                    ViewNoteScreen(
-                      noteId: widget.noteId,
-                    )
-                  )
-                );
-                
-                passwordController.clear();
+                SharedPreferences.getInstance().then((prefs) {
+
+                  if (passwordController.text == prefs.getString('notePassword')) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ViewNoteScreen(noteId: widget.noteId)),
+                    );
+                  } else {
+                    SnackBarUtil.showSnackBar(noteCardKey.currentContext!, 'Incorrect password');
+                  }
+
+                  passwordController.clear();
+                });
               },
               children: [
                 Form(
