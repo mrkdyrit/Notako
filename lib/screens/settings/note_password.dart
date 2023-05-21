@@ -87,7 +87,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                 final prefs = await SharedPreferences.getInstance();
 
                 if(notePasswordController.text != prefs.getString('notePassword')) {
-                  
+
                 }
                 
                 notePasswordController.clear();
@@ -209,6 +209,16 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                     builder: (BuildContext context) {
                       return StatefulBuilder(
                         builder: (context, setState) {
+                          TextInputType passwordType = TextInputType.none;
+
+                          if(selectedPasswordOption == 'Password') {
+                            passwordType = TextInputType.text;
+                          }
+
+                          if(selectedPasswordOption == 'PIN') {
+                            passwordType = TextInputType.number;
+                          }
+
                           return notakoAlertDialog(
                             titleText: 'Change Password', 
                             alertDescription: 'Add or change the password used for note locking.',
@@ -240,13 +250,14 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                                     NotakoTextFormFieldPassword(
                                       textFieldController: passwordController,
                                       validator: (value) {
-                                        if (value == null || value.isEmpty || !RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$').hasMatch(value)) {
-                                          return '• Passwords must be alphanumeric. \n• Passwords must be 8 characters long. \n• Password must contain at least one uppercase letter.';
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a password';
                                         }
 
                                         return null;
                                       },
                                       hintText: 'Password',
+                                      keyboardType: passwordType,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 15),
@@ -260,6 +271,7 @@ class _NotePasswordScreenState extends State<NotePasswordScreen> {
                                           return null;
                                         },
                                         hintText: 'Confirm Password',
+                                        keyboardType: passwordType,
                                       ),
                                     )
                                   ],

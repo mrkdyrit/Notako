@@ -6,6 +6,7 @@ class NotakoTextFormFieldPassword extends StatefulWidget {
   final String? hintText;
   final TextEditingController? textFieldController;
   final Color? prefixIconColor;
+  final TextInputType? keyboardType;
 
   const NotakoTextFormFieldPassword({
     super.key,
@@ -13,6 +14,7 @@ class NotakoTextFormFieldPassword extends StatefulWidget {
     this.hintText,
     this.textFieldController,
     this.prefixIconColor,
+    this.keyboardType,
   });
 
   @override
@@ -28,6 +30,7 @@ class NotakoTextFormFieldPasswordState extends State<NotakoTextFormFieldPassword
 
   @override
   Widget build(BuildContext context) {
+
     return NotakoTextFormField(
       textFieldController: widget.textFieldController,
       prefixIcon: Icons.lock,
@@ -46,6 +49,7 @@ class NotakoTextFormFieldPasswordState extends State<NotakoTextFormFieldPassword
         });
       },
       validator: widget.validator,
+      keyboardType: widget.keyboardType,
     );
   }
 }

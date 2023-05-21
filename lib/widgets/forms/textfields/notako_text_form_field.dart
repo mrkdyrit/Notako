@@ -14,6 +14,7 @@ class NotakoTextFormField extends StatefulWidget {
   final Function()? onTapOutside;
   final String? Function(String?)? validator;
   final Function(String)? onFieldSubmitted;
+  final TextInputType? keyboardType;
 
   const NotakoTextFormField({
     super.key,
@@ -28,6 +29,7 @@ class NotakoTextFormField extends StatefulWidget {
     this.onTapOutside,
     this.validator,
     this.onFieldSubmitted,
+    this.keyboardType,
   });
 
   @override
@@ -100,7 +102,7 @@ class _NotakoTextFormFieldState extends State<NotakoTextFormField> {
       },
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
-      
+      keyboardType: widget.keyboardType,
     );
   }
 }
